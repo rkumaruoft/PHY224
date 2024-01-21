@@ -18,14 +18,14 @@ def best_position_estimate(speed_estimate, mean_time, mean_distance):
     return mean_distance - speed_estimate * mean_time
 
 
-def distance_formula(initial_position, speed, time):
-    return initial_position + (speed * time)
+def distance_formula(x, initial_position, speed):
+    return initial_position + (speed * x)
 
 
 def x_r2_metric(N, m, initial_position, speed, measured_distance_data, times, uncertainties):
     to_sum = []
     for i in range(N):
-        to_sum.append(((measured_distance_data[i] - distance_formula(initial_position, speed, times[i])) ** 2)
+        to_sum.append(((measured_distance_data[i] - distance_formula(times[i], initial_position, speed)) ** 2)
                       / (uncertainties[i] ** 2))
     return sum(to_sum) / (N - m)
 
@@ -70,8 +70,16 @@ if __name__ == '__main__':
     x_r = x_r2_metric(len(xpoints), 2, position_estimate, speed_estimate, ypoints, xpoints, uncertainties)
     print("X_r^2 : " + str(x_r))
 
-    plt.plot(xpoints, distance_formula(position_estimate, speed_estimate, xpoints), label="Prediction")
+    # curve fit
+    popt,pcov = curve_fit(distance_formula, xpoints, ypoints)
+
+    plt.plot(xpoints, distance_formula(xpoints, position_estimate, speed_estimate), label="Prediction")
     plt.errorbar(xpoints, ypoints, yerr=uncertainties, fmt='.', label="Data")
+    print(popt)
+    fit_0 = popt[0]
+    fit_1 = popt[1]
+    fit_data = distance_formula(xpoints, fit_0, fit_1)
+    plt.plot(xpoints, fit_data, label="CurveFit")
     plt.title("Saturn V data")
     plt.xlabel("Time(hour)")
     plt.ylabel("Position(km)")
