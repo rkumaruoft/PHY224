@@ -9,7 +9,6 @@ def motion_equation(x, initial_position, velocity, acceleration):
 
 
 if __name__ == '__main__':
-    mat.use('TkAgg')
     data = numpy.loadtxt("feather.csv", delimiter=",")
     xpoints = []
     ypoints = []

@@ -32,7 +32,6 @@ def x_r2_metric(N, m, initial_position, speed, measured_distance_data, times, un
 
 
 if __name__ == '__main__':
-    mat.use('TkAgg')
     data = numpy.loadtxt("rocket.csv", delimiter=",")
     xpoints = []
     ypoints = []
@@ -77,6 +76,7 @@ if __name__ == '__main__':
     plt.errorbar(xpoints, ypoints, yerr=uncertainties, fmt='.', label="Data")
     plt.plot(xpoints, distance_formula(xpoints, position_estimate, speed_estimate), label="Prediction")
     print(popt)
+    print(pcov)
     fit_0 = popt[0]
     fit_1 = popt[1]
     fit_data = distance_formula(xpoints, fit_0, fit_1)
