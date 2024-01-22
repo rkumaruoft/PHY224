@@ -1,4 +1,4 @@
-import matplotlib
+import matplotlib as mat
 import numpy
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
@@ -8,9 +8,9 @@ from scipy.optimize import curve_fit
 def best_speed_estimate(times, distances, mean_time, mean_distance):
     numerators = []
     denominators = []
-    for i in range(len(times)):
-        numerators.append((times[i] - mean_time) * (distances[i] - mean_distance))
-        denominators.append((times[i] - mean_time) ** 2)
+    for index in range(len(times)):
+        numerators.append((times[index] - mean_time) * (distances[index] - mean_distance))
+        denominators.append((times[index] - mean_time) ** 2)
     return sum(numerators) / sum(denominators)
 
 
@@ -22,6 +22,7 @@ def distance_formula(x, initial_position, speed):
     return initial_position + (speed * x)
 
 
+# noinspection PyShadowingNames
 def x_r2_metric(N, m, initial_position, speed, measured_distance_data, times, uncertainties):
     to_sum = []
     for i in range(N):
@@ -31,6 +32,7 @@ def x_r2_metric(N, m, initial_position, speed, measured_distance_data, times, un
 
 
 if __name__ == '__main__':
+    mat.use('TkAgg')
     data = numpy.loadtxt("rocket.csv", delimiter=",")
     xpoints = []
     ypoints = []
@@ -72,14 +74,13 @@ if __name__ == '__main__':
 
     # curve fit
     popt,pcov = curve_fit(distance_formula, xpoints, ypoints)
-
-    plt.plot(xpoints, distance_formula(xpoints, position_estimate, speed_estimate), label="Prediction")
     plt.errorbar(xpoints, ypoints, yerr=uncertainties, fmt='.', label="Data")
+    plt.plot(xpoints, distance_formula(xpoints, position_estimate, speed_estimate), label="Prediction")
     print(popt)
     fit_0 = popt[0]
     fit_1 = popt[1]
     fit_data = distance_formula(xpoints, fit_0, fit_1)
-    plt.plot(xpoints, fit_data, label="CurveFit")
+    plt.plot(xpoints, fit_data, label="CurveFit", linestyle='dashed', color="blue")
     plt.title("Saturn V data")
     plt.xlabel("Time(hour)")
     plt.ylabel("Position(km)")
