@@ -24,7 +24,7 @@ if __name__ == "__main__":
     current_uncert = numpy.array(current_uncert)
     popt, pcov = curve_fit(linear_model, xdata=current_data, ydata=voltage_data, p0 = [470, 1])
     print(popt)
-    fit_data = func_ohm_law(current_data, popt[0]) + popt[1]
+    fit_data = linear_model(current_data, popt[0], popt[1])
     residuals = []
     for line in range(len(voltage_data)):
         residuals.append(voltage_data[line] - fit_data[line])
