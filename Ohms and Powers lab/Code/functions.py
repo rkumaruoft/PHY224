@@ -1,7 +1,6 @@
-import matplotlib as mat
-import numpy
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
+import numpy
 
 
 def func_ohm_law(voltage, resistance):
@@ -55,8 +54,3 @@ def main_func(data):
     plt.legend()
     plt.rcParams["figure.dpi"] = 900
     plt.show()
-
-
-if __name__ == "__main__":
-    data = numpy.loadtxt("voltage-current-data-part1.csv", delimiter=',')
-    main_func(data)
