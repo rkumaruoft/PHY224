@@ -1,0 +1,8 @@
+q1 => Our linear fit does not paas through zero because we used ax+b to to fit our data using curve fit which gave us 2
+parameters (a and b) where a was the slope of the data(resistance) and b is the residual voltage that was present
+when the circuit was turned off.
+q2 => If we fit the data to y=mx+b then the resistance value is closer to the actual value for the resistor. But if we
+force the model to fit to y=mx then the resistance value goes up. explain why? I think the second fit gives us the
+resistance including the internal resistence of the connecting wires and maybe some internal resistance from the multimeter.
+q3 => The measured value using the multimeter was 470 +- 4 ohms and the curve fit value is 475.9. The calculated value
+is higher than the measured value.
