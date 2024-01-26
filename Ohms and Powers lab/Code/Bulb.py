@@ -73,7 +73,7 @@ if __name__ == "__main__":
     # X-r_power metric calculations
     x_r_power = x_r2_metric(len(current_data), 2,current_data, model_data, current_uncert)
     print(x_r_power)
-    # Theoretical Model Calculations
+    # Theoretical Model Calculations- get a constant from just one v-I value and use it to plot the rest of the data
     popt, pcov = curve_fit(theoretical_model, xdata=voltage_data, ydata=current_data)
     print("Popt of thoretical model" + str(popt))
     theoretical_data = theoretical_model(voltage_data, popt[0])

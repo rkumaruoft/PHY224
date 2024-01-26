@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import numpy
+import pylab
 
 
 def func_ohm_law(voltage, resistance):
@@ -30,9 +31,9 @@ def main_func(data):
     i = 0
     for line in data:
         voltage_data.append(line[0])
-        current_data.append(line[1])
+        current_data.append(line[1] * 1000)
         voltage_uncert.append(line[2])
-        current_uncert.append(line[3])
+        current_uncert.append(line[3] * 1000)
 
     voltage_data = numpy.array(voltage_data)
     current_data = numpy.array(current_data)
@@ -49,7 +50,7 @@ def main_func(data):
     fit_data = linear_model_2(voltage_data, popt[0])
     plt.plot(voltage_data, fit_data, label='Curve Fit (y = mx)', linestyle='dashed', color='blue')
     plt.xlabel("Voltage (V)")
-    plt.ylabel("Current (A)")
+    plt.ylabel("Current (mA)")
     plt.title("Ohm's Law")
     plt.legend()
     plt.rcParams["figure.dpi"] = 900

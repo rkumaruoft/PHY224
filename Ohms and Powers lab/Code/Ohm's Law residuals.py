@@ -14,9 +14,9 @@ if __name__ == "__main__":
     i = 0
     for line in data:
         voltage_data.append(line[0])
-        current_data.append(line[1])
+        current_data.append(line[1] * 1000)
         voltage_uncert.append(line[2])
-        current_uncert.append(line[3])
+        current_uncert.append(line[3] * 1000)
 
     voltage_data = numpy.array(voltage_data)
     current_data = numpy.array(current_data)
@@ -29,8 +29,8 @@ if __name__ == "__main__":
     for line in range(len(voltage_data)):
         residuals.append(voltage_data[line] - fit_data[line])
     plt.scatter(voltage_data, residuals)
-    plt.xlabel("Current (A)")
-    plt.ylabel("Voltage (V)")
+    plt.xlabel("Voltage (V)")
+    plt.ylabel("Current (mA)")
     plt.title("Ohm's Law")
     plt.rcParams["figure.dpi"] = 900
     plt.show()
