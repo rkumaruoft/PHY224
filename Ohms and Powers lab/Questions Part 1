@@ -6,3 +6,7 @@ force the model to fit to y=mx then the resistance value goes up. explain why? I
 resistance including the internal resistence of the connecting wires and maybe some internal resistance from the multimeter.
 q3 => The measured value using the multimeter was 470 +- 4 ohms and the curve fit value is 475.9. The calculated value
 is higher than the measured value.
+
+q4 => x_r = 0.1277119951 < 1 which means that our curve over-fits the model and maybe it needs more data or perhaps
+it is fitting the noise. It could also mean that our curve fit fits our data very well without a lot of fluctuations
+which makes sense because our errors are very very small and y = mx+b fits our data almost perfectly.
