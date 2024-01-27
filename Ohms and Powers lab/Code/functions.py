@@ -40,12 +40,15 @@ def main_func(data):
     voltage_uncert = numpy.array(voltage_uncert)
     current_uncert = numpy.array(current_uncert)
     plt.errorbar(voltage_data, current_data, yerr=current_uncert, xerr=voltage_uncert, fmt=" ")
+    """ Fitting the model"""
     popt, pcov = curve_fit(linear_model, xdata=voltage_data, ydata=current_data,
                            sigma=current_uncert, absolute_sigma=True,
                            p0=[1 / 470, 0])
     print(popt)
     fit_data = linear_model(voltage_data, popt[0], popt[1])
     plt.plot(voltage_data, fit_data, label='Curve Fit (y = mx +b)')
+
+    """ chi_r^2 metric calculation"""
     x_r2 = x_r2_metric(len(current_data), 2, current_data, voltage_data, popt[0], popt[1], current_uncert)
     print(x_r2)
     popt, pcov = curve_fit(linear_model_2,
@@ -54,6 +57,8 @@ def main_func(data):
                            sigma=current_uncert,
                            absolute_sigma=True,
                            p0=[1 / 470])
+
+    """ plotting graphs"""
     fit_data = linear_model_2(voltage_data, popt[0])
     plt.plot(voltage_data, fit_data, label='Curve Fit (y = mx)', linestyle='dashed', color='blue')
     plt.xlabel("Voltage (V)")
