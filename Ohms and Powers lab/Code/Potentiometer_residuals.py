@@ -5,7 +5,7 @@ from scipy.optimize import curve_fit
 from functions import func_ohm_law, linear_model
 
 if __name__ == "__main__":
-    data = numpy.loadtxt("../voltage-current-data-part1.csv", delimiter=',')
+    data = numpy.loadtxt("../voltage_current_data_part2.csv", delimiter=',')
 
     voltage_data = []
     current_data = []
@@ -26,12 +26,12 @@ if __name__ == "__main__":
     print(popt)
     fit_data = linear_model(voltage_data, popt[0], popt[1])
     residuals = []
-    for line in range(len(voltage_data)):
+    for line in range(len(current_data)):
         residuals.append(current_data[line] - fit_data[line])
     plt.scatter(voltage_data, residuals)
     plt.axhline(y=0)
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")
-    plt.title("Ohm's Law")
+    plt.title("Potentiometer Residuals")
     plt.rcParams["figure.dpi"] = 900
     plt.show()

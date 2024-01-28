@@ -10,3 +10,6 @@ is higher than the measured value.
 q4 => x_r = 0.1277119951 < 1 which means that our curve over-fits the model and maybe it needs more data or perhaps
 it is fitting the noise. It could also mean that our curve fit fits our data very well without a lot of fluctuations
 which makes sense because our errors are very very small and y = mx+b fits our data almost perfectly.
+
+q5 => log-linear model gave us an exponent closer to the expected value (3/5). In the graph we can se that the
+log-linear model is closer to the measured points than the power model

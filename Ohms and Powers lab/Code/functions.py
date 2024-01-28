@@ -65,7 +65,6 @@ def main_func(data):
     plt.ylabel("Current (mA)")
 
     plt.subplots_adjust(bottom=0.2)
-    plt.figtext(0, 0.05, "Error bars are big bruh")
 
     plt.title("Ohm's Law")
     plt.legend()
