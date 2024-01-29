@@ -64,6 +64,7 @@ if __name__ == "__main__":
     plt.ylabel("Current (mA)")
     plt.title("Bulb Plot(Log Linear Model)")
     plt.legend()
+    plt.savefig('Log_Linear_Model.png', dpi=250)
     plt.show()
     # parameter standerd deviation
     print("pcov log model :", pcov)

@@ -46,7 +46,14 @@ def main_func(data):
                            p0=[1 / 470, 0])
     print(popt)
     fit_data = linear_model(voltage_data, popt[0], popt[1])
-    plt.plot(voltage_data, fit_data, label='Curve Fit (y = mx +b)')
+    plt.plot(voltage_data, fit_data, label='y = mx +b')
+    plt.xlabel("Voltage (V)")
+    plt.ylabel("Current (mA)")
+
+    plt.subplots_adjust(bottom=0.2)
+    plt.legend()
+    plt.savefig("Ohm's_law(mx+b)", dpi=250)
+    plt.show()
 
     """ chi_r^2 metric calculation"""
     x_r2 = x_r2_metric(len(current_data), 2, current_data, voltage_data, popt[0], popt[1], current_uncert)
@@ -57,16 +64,15 @@ def main_func(data):
                            sigma=current_uncert,
                            absolute_sigma=True,
                            p0=[1 / 470])
-
+    print(popt)
     """ plotting graphs"""
+    plt.errorbar(voltage_data, current_data, yerr=current_uncert, xerr=voltage_uncert, fmt=" ")
     fit_data = linear_model_2(voltage_data, popt[0])
-    plt.plot(voltage_data, fit_data, label='Curve Fit (y = mx)', linestyle='dashed', color='blue')
+    plt.plot(voltage_data, fit_data, label='y = mx', linestyle='dashed', color='blue')
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")
 
     plt.subplots_adjust(bottom=0.2)
-
-    plt.title("Ohm's Law")
     plt.legend()
-    plt.rcParams["figure.dpi"] = 900
+    plt.savefig("Ohm's_Law(mx)", dpi=250)
     plt.show()
