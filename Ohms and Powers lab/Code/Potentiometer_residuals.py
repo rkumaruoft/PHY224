@@ -34,3 +34,16 @@ if __name__ == "__main__":
     plt.ylabel("Current (mA)")
     plt.savefig("potentiometer_residual(mx)", dpi=250)
     plt.show()
+
+    popt, pcov = curve_fit(linear_model, xdata=voltage_data, ydata=current_data)
+    print(popt)
+    fit_data = linear_model(voltage_data, popt[0], popt[1])
+    residuals = []
+    for line in range(len(current_data)):
+        residuals.append(current_data[line] - fit_data[line])
+    plt.scatter(voltage_data, residuals)
+    plt.axhline(y=0)
+    plt.xlabel("Voltage (V)")
+    plt.ylabel("Current (mA)")
+    plt.savefig("potentiometer_residual(mx+b)", dpi=250)
+    plt.show()

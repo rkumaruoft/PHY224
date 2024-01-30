@@ -2,7 +2,7 @@ import matplotlib as mat
 import numpy
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
-from functions import func_ohm_law, linear_model
+from functions import func_ohm_law, linear_model, linear_model_2
 
 if __name__ == "__main__":
     data = numpy.loadtxt("../voltage-current-data-part1.csv", delimiter=',')
@@ -32,5 +32,18 @@ if __name__ == "__main__":
     plt.axhline(y=0)
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")
-    plt.rcParams["figure.dpi"] = 900
+    plt.savefig("Ohm's_law(mx+b)_residuals", dpi=250)
+    plt.show()
+
+    popt, pcov = curve_fit(linear_model_2, xdata=voltage_data, ydata=current_data)
+    print(popt)
+    fit_data = linear_model_2(voltage_data, popt[0])
+    residuals = []
+    for line in range(len(voltage_data)):
+        residuals.append(current_data[line] - fit_data[line])
+    plt.scatter(voltage_data, residuals)
+    plt.axhline(y=0)
+    plt.xlabel("Voltage (V)")
+    plt.ylabel("Current (mA)")
+    plt.savefig("Ohm's_law(mx)_residuals", dpi=250)
     plt.show()
