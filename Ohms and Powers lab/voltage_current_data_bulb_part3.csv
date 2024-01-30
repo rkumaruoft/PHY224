@@ -1,4 +1,4 @@
-#V, Amps,Visual uncertainty V,Visual uncertainty mA
+#V, Amps,Voltage uncertainty V,Current uncertainty A
 6.591,0.0173,0.0052955,0.0010519
 7.29,0.0184,0.005645,0.0010552
 8.689,0.0205,0.0063445,0.0010615
