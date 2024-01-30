@@ -62,10 +62,10 @@ if __name__ == "__main__":
     print(x_r_linear)
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")
-    plt.title("Bulb Plot(Log Linear Model)")
     plt.legend()
     plt.savefig('Log_Linear_Model.png', dpi=250)
     plt.show()
+
     # parameter standerd deviation
     print("pcov log model :", pcov)
     variance_a = pcov[0][0]
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     plt.axhline(y=0)
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")
-    plt.title("Log linear model residuals")
+    plt.savefig('Log_Linear_Model_residuals.png', dpi=250)
     plt.show()
     print("\n\n\nPOWER MODEL\n\n\n")
     # POWER MODEL CALCULATIONS
@@ -99,8 +99,8 @@ if __name__ == "__main__":
     plt.plot(voltage_data, model_data, label='Nonlinear Regression')
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")
-    plt.title("Bulb Plot (Power Model)")
     plt.legend()
+    plt.savefig('power_model.png', dpi=250)
     plt.show()
 
     # parameter standerd deviation
@@ -120,7 +120,7 @@ if __name__ == "__main__":
     plt.axhline(y=0)
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")
-    plt.title("Power model residuals")
+    plt.savefig('power_model_residuals.png', dpi=250)
     plt.show()
 
     print("\n\n\nTHEORETICAL MODEL\n\n\n")

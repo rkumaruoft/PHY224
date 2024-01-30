@@ -32,6 +32,5 @@ if __name__ == "__main__":
     plt.axhline(y=0)
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")
-    plt.title("Ohm's Law")
     plt.rcParams["figure.dpi"] = 900
     plt.show()
