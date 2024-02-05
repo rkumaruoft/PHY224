@@ -15,10 +15,12 @@ def power_model(x, c, d):
     return c * (x ** d)
 
 
+
 def x_r2_metric(N, m, measured_current_data, calculated_data, uncertainties):
     sum = 0
     for i in range(N):
         sum += ((measured_current_data[i] - calculated_data[i]) ** 2) / (uncertainties[i] ** 2)
+
     return sum / (N - m)
 
 
@@ -45,8 +47,16 @@ if __name__ == "__main__":
     current_data = numpy.array(current_data)
     voltage_uncert = numpy.array(voltage_uncert)
     current_uncert = numpy.array(current_uncert)
+    log_current_uncert = []
+    log_voltage_uncert = []
 
-    plt.errorbar(voltage_data, current_data, yerr=current_uncert, xerr=voltage_uncert, fmt=" ")
+    for line in range(len(current_data)):
+        log_current_uncert.append(current_uncert[line] / current_data[line])
+        log_voltage_uncert.append(voltage_uncert[line] / voltage_data[line])
+    log_voltage_uncert = numpy.array(log_voltage_uncert)
+    log_current_uncert = numpy.array(log_current_uncert)
+
+    plt.errorbar(voltage_data, current_data, yerr=current_uncert, xerr=voltage_uncert, fmt=".")
 
     # LOG MODEL CALCULATIONS
     popt, pcov = curve_fit(linear_model, xdata=log_voltage_data, ydata=log_current_data)
@@ -78,17 +88,18 @@ if __name__ == "__main__":
 
     # log model residuals
     residuals = []
-    for line in range(len(log_model_data)):
-        residuals.append(log_current_data[line] - log_model_data[line])
-    plt.scatter(voltage_data, residuals)
+    for line in range(len(antilog_model_data)):
+        residuals.append(current_data[line] - antilog_model_data[line])
+    plt.errorbar(voltage_data, residuals, yerr=current_uncert, xerr=voltage_uncert, fmt=".")
     plt.axhline(y=0)
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")
     plt.savefig('Log_Linear_Model_residuals.png', dpi=250)
     plt.show()
     print("\n\n\nPOWER MODEL\n\n\n")
+
     # POWER MODEL CALCULATIONS
-    plt.errorbar(voltage_data, current_data, yerr=current_uncert, xerr=voltage_uncert, fmt=" ")
+    plt.errorbar(voltage_data, current_data, yerr=current_uncert, xerr=voltage_uncert, fmt=".")
     popt, pcov = curve_fit(power_model, xdata=voltage_data, ydata=current_data)
     print("Popt of powermodel:" + str(popt))
     model_data = power_model(voltage_data, popt[0], popt[1])
@@ -116,7 +127,7 @@ if __name__ == "__main__":
     residuals_power = []
     for line in range(len(model_data)):
         residuals_power.append(current_data[line] - model_data[line])
-    plt.scatter(voltage_data, residuals)
+    plt.errorbar(voltage_data, residuals_power, yerr=current_uncert, xerr=voltage_uncert, fmt="o")
     plt.axhline(y=0)
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")
@@ -125,7 +136,7 @@ if __name__ == "__main__":
 
     print("\n\n\nTHEORETICAL MODEL\n\n\n")
     # Theoretical Model Calculations- get a constant from just one v-I value and use it to plot the rest of the data
-    plt.errorbar(voltage_data, current_data, yerr=current_uncert, xerr=voltage_uncert, fmt=" ")
+    plt.errorbar(voltage_data, current_data, yerr=current_uncert, xerr=voltage_uncert, fmt=".")
     popt, pcov = curve_fit(theoretical_model, xdata=voltage_data, ydata=current_data)
     print("Popt of thoretical model" + str(popt))
     theoretical_data = theoretical_model(voltage_data, k)
@@ -140,7 +151,7 @@ if __name__ == "__main__":
     residuals_theoretical = []
     for line in range(len(model_data)):
         residuals_theoretical.append(current_data[line] - theoretical_data[line])
-    plt.scatter(voltage_data, residuals_theoretical)
+    plt.errorbar(voltage_data, residuals_theoretical, yerr=current_uncert, xerr=voltage_uncert, fmt=".")
     plt.axhline(y=0)
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")

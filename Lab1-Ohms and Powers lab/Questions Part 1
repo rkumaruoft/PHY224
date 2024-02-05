@@ -12,4 +12,4 @@ it is fitting the noise. It could also mean that our curve fit fits our data ver
 which makes sense because our errors are very very small and y = mx+b fits our data almost perfectly.
 
 q5 => log-linear model gave us an exponent closer to the expected value (3/5). In the graph we can se that the
-log-linear model is closer to the measured points than the power model
+log-linear model is closer to the measured points than the power model.

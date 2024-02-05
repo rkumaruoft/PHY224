@@ -23,6 +23,14 @@ def x_r2_metric(N, m, measured_current_data, voltage_data, a, b, uncertainties):
     return sum / (N - m)
 
 
+def x_r2_metric_2(N, m, measured_current_data, calculated_data, uncertainties):
+    sum = 0
+    for i in range(N):
+        sum += ((measured_current_data[i] - calculated_data[i]) ** 2) / (uncertainties[i] ** 2)
+
+    return sum / (N - m)
+
+
 def main_func(data):
     voltage_data = []
     current_data = []
@@ -68,7 +76,10 @@ def main_func(data):
     """ plotting graphs"""
     plt.errorbar(voltage_data, current_data, yerr=current_uncert, xerr=voltage_uncert, fmt=" ")
     fit_data = linear_model_2(voltage_data, popt[0])
+    x_r2 = x_r2_metric_2(len(current_data), 2, current_data, fit_data,current_uncert)
+    print(x_r2)
     plt.plot(voltage_data, fit_data, label='y = mx', linestyle='dashed', color='blue')
+
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")
 

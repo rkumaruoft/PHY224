@@ -28,7 +28,7 @@ if __name__ == "__main__":
     residuals = []
     for line in range(len(current_data)):
         residuals.append(current_data[line] - fit_data[line])
-    plt.scatter(voltage_data, residuals)
+    plt.errorbar(voltage_data, residuals, yerr=current_uncert, xerr=voltage_uncert, fmt=".")
     plt.axhline(y=0)
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     residuals = []
     for line in range(len(current_data)):
         residuals.append(current_data[line] - fit_data[line])
-    plt.scatter(voltage_data, residuals)
+    plt.errorbar(voltage_data, residuals, yerr=current_uncert, xerr=voltage_uncert, fmt=".")
     plt.axhline(y=0)
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")
