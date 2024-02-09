@@ -6,7 +6,6 @@ from functions import func_ohm_law, linear_model, linear_model_2
 
 if __name__ == "__main__":
     data = numpy.loadtxt("../voltage-current-data-part1.csv", delimiter=',')
-
     voltage_data = []
     current_data = []
     voltage_uncert = []

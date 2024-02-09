@@ -30,8 +30,6 @@ if __name__ == "__main__":
     current_data = []
     voltage_uncert = []
     current_uncert = []
-    # calculated contanst for theoretical data (calculated from V = 10.387 I = 0.0229)
-    k = 0.005622654571 * 1000
 
     # for linear regression on the linear model
     i = 0
@@ -135,15 +133,15 @@ if __name__ == "__main__":
     plt.show()
 
     print("\n\n\nTHEORETICAL MODEL\n\n\n")
-    # Theoretical Model Calculations- get a constant from just one v-I value and use it to plot the rest of the data
     plt.errorbar(voltage_data, current_data, yerr=current_uncert, xerr=voltage_uncert, fmt=".")
     popt, pcov = curve_fit(theoretical_model, xdata=voltage_data, ydata=current_data)
     print("Popt of thoretical model" + str(popt))
-    theoretical_data = theoretical_model(voltage_data, k)
+    theoretical_data = theoretical_model(voltage_data, popt[0])
     plt.plot(voltage_data, theoretical_data, linestyle='dashed', color='blue', label='Theoretical Curve')
+
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")
-    plt.title("Bulb Plot (Theoretical Model)")
+    plt.savefig('theoretical_model.png', dpi=250)
     plt.legend()
     plt.show()
 
@@ -152,8 +150,11 @@ if __name__ == "__main__":
     for line in range(len(model_data)):
         residuals_theoretical.append(current_data[line] - theoretical_data[line])
     plt.errorbar(voltage_data, residuals_theoretical, yerr=current_uncert, xerr=voltage_uncert, fmt=".")
+    # X-r_power metric calculations
+    x_r_power = x_r2_metric(len(current_data), 2, current_data, theoretical_data, current_uncert)
+    print(x_r_power)
     plt.axhline(y=0)
     plt.xlabel("Voltage (V)")
     plt.ylabel("Current (mA)")
-    plt.title("Theoretical model residuals")
+    plt.savefig('theoretical_model_residuals.png', dpi=250)
     plt.show()
