@@ -1,4 +1,4 @@
-V,I mA,uncert volt,uncert current
+#V,I mA,uncert volt,uncert current
 6.447,29.357,0.0052235,0.063714
 6.475,13.874,0.0052375,0.032748
 6.496,2.399,0.005248,0.009798
