@@ -1,0 +1,125 @@
+Internal resistance lab
+Units are same for all data collection
+Solving for R_Internal
+Cell battery: V_∞=6.532+device uncert
+Using: Setup option 1
+V	I (mA)	R_load  (ohms)
+6.511	29.402	220
+6.503	13.875	470
+6.523	2.405	2.7 e3
+6.524	0.241	27 e3
+6.525	0.060	100 e3
+
+
+
+Setup 2:
+Note: Cell battery circuit voltage went dropped to 6.522 <:: we use this value.
+ V	I (mA)	R_L (ohms)
+6.461	29.413	220
+6.490	13.905	470
+6.512	2.404	2.7 e3
+6.517	0.242	27 e3
+6.518	0.061	100 e3
+
+
+
+
+I_max for the dc power supply: 0.26 A
+
+
+
+
+DC regulated power supply:
+Setup 1: testing the limits, for Q4
+
+
+Option 1 setup (ammeter between voltmeter and load resistance):
+
+v_∞=6.5V
+
+V	I mA	R_Lohm
+6.499	29.393	220
+6.499	13.872	470
+6.5	2.398	2.7 e3
+6.5	0.241	27 e3
+6.5	0.061	100 e3
+
+v_∞=10V
+
+V	I mA	R_Lohm
+9.998	45.14	220
+9.999	21.338	470
+9.999	3.689	2.7 e3
+9.999	0.372	27 e3
+10.000	0.094	100 e3
+
+v_∞=15V
+
+V	I mA	R_Lohm
+14.997	67.70	220
+14.998	32.003	470
+14.999	5.533	2.7 e3
+14.999	0.558	27 e3
+14.999	0.141	100 e3
+v_∞=20V
+
+V	I mA	R_Lohm
+19.997	90.23	220
+19.999	42.66	470
+20	7.378	2.7 e3
+20	0.745	27 e3
+20	0.189	100 e3
+
+Option 2 setup (ammeter between voltameter and power source):
+v_∞=6.5V
+
+V	I mA	R_Lohm
+6.447	29.357	220
+6.475	13.874	470
+6.496	2.399	2.7 e3
+6.500	0.243	27 e3
+6.500	0.062	100 e3
+
+
+v_∞=10V
+V	I mA	R_L Ohms
+9.917	45.15	220
+9.961	21.339	470
+9.993	3.689	2.7 e3
+9.999	0.372	27 e3
+10.000	0.094	100 e3
+
+
+
+v_∞=15V
+
+V	I mA	R_Lohm
+14.875	67.70	220
+14.941	32.004	470
+14.990	5.534	2.7 e3
+14.998	0.559	27 e3
+14.999	0.143	100 e3
+
+
+v_∞=20V
+
+V	I mA	R_Lohm
+19.833	90.15	220
+19.922	42.66	470
+19.987	7.379	2.7 e3
+19.999	0.746	27 e3
+20.000	0.191	100 e3
+
+
+
+
+
+
+
+
+Q1 setup 1 is better
+Q2: we had 6 resistors to use: we used five of them, and refrained from using the one with the smallest resistance of 100 ohm due to risk of overheating and therefore unstableness in measuring data.
+Q3
+Q4
+Excel volt uncert =(A2*0.05%)+(0.001*2)
+Excel current uncert =(B2*0

@@ -1,0 +1,21 @@
+Q1: Option 1 is better. In setup one, the ammeter is not reading all of the
+current due to resistances in the voltmeter, while the voltmeter is reading all the voltage.
+ In setup two, the ammeter is reading all
+of the current before the voltmeter reads the terminal
+voltage, so the voltmeter value is then measuring less voltage than ideal due to
+the ammeters resistance.   If we analyse the terminal voltage formula thus, the
+internal resistance is R_int = )V_output-V_terminal) / I, setup 1 will give a
+larger internal resistance reading since dividing by the Current in Ohm's law
+has a greater change on the output voltage than the the size of the terminal
+voltage being subtracted from output voltage. Dividing by a smaller current
+gives us a larger resistance. Setup 2 will give us a lower internal resistance
+than the theoretical value.
+
+
+ The ammeter measures the current in series, the
+ voltmeter measures the voltage in parallel.
+
+
+Q2: we had 6 resistors to use: we used five of them, and refrained from using \
+the one with the smallest resistance of 100 ohm due to (higher) risk of overheating and
+therefore unsteadiness in measuring data.
