@@ -60,6 +60,9 @@ if __name__ == "__main__":
     popt, pcov = curve_fit(linear_model, xdata=log_voltage_data, ydata=log_current_data)
     print("Popt of log model: ", popt)
     print("Exponent = ", popt[0])
+    exponent_error = numpy.sqrt(numpy.diag(pcov))[0]
+    print("Uncertainty on exponent(" + str(popt[0]) + ") = " + str(exponent_error))
+
     log_model_data = linear_model(log_voltage_data, popt[0], popt[1])
     antilog_model_data = []
     for line in log_model_data:
@@ -73,7 +76,6 @@ if __name__ == "__main__":
     plt.legend()
     plt.savefig('Log_Linear_Model.png', dpi=250)
     plt.show()
-
     # parameter standerd deviation
     print("pcov log model :", pcov)
     variance_a = pcov[0][0]
@@ -102,6 +104,8 @@ if __name__ == "__main__":
     print("Popt of powermodel:" + str(popt))
     model_data = power_model(voltage_data, popt[0], popt[1])
     print("Exponent = ", popt[1])
+    exponent_error = numpy.sqrt(numpy.diag(pcov))[1]
+    print("Uncertainty on exponent(" + str(popt[1]) + ") = " + str(exponent_error))
     # X-r_power metric calculations
     x_r_power = x_r2_metric(len(current_data), 2, current_data, model_data, current_uncert)
     print(x_r_power)
