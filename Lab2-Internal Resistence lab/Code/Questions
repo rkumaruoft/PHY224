@@ -11,6 +11,9 @@ voltage being subtracted from output voltage. Dividing by a smaller current
 gives us a larger resistance. Setup 2 will give us a lower internal resistance
 than the theoretical value.
 
+Lets compare the theoretical value to out data:
+
+for V=6.5 volts, load resistance
 
  The ammeter measures the current in series, the
  voltmeter measures the voltage in parallel.
