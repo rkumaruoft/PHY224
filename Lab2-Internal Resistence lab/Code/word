@@ -118,7 +118,8 @@ V	I mA	R_Lohm
 
 
 Q1 setup 1 is better
-Q2: we had 6 resistors to use: we used five of them, and refrained from using the one with the smallest resistance of 100 ohm due to risk of overheating and therefore unstableness in measuring data.
+Q2: we had 6 resistors to use: we used five of them, and refrained from using the one with the smallest resistance of
+100 ohm due to risk of overheating and therefore unstableness in measuring data.
 Q3
 Q4
 Excel volt uncert =(A2*0.05%)+(0.001*2)
