@@ -48,8 +48,11 @@ if __name__ == "__main__":
     plt.errorbar(x_data, cesium_20_counts, yerr=cesium_20_uncert, fmt=".")
 
     cesium_20_counts_log = numpy.array([math.log(count, math.e) for count in cesium_20_counts])
+    cesium_20_uncert_log = numpy.array([cesium_20_uncert[i]
+                                        / cesium_20_counts[i]
+                                        for i in range(len(cesium_20_uncert))])
     popt, pcov = curve_fit(model_func_1, xdata=x_data, ydata=cesium_20_counts_log,
-                           sigma=cesium_20_uncert)
+                           sigma=cesium_20_uncert_log, absolute_sigma=True)
     model_func_1_data = model_func_1(x_data, popt[0], popt[1])
     antilog_model_data = []
     for data in model_func_1_data:
