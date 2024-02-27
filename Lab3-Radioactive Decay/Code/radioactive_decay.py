@@ -21,11 +21,15 @@ def get_counts_array(fileName):
     lines.pop(0)
     return numpy.array([float(line.split('\t')[1].replace('\n', '')) for line in lines])
 
+def reduced_x_r2(N, m, measured_data, model_data, uncertainties):
+    summ = 0
+    for i in range(N):
+        summ += ((measured_data[i] - model_data[i]) ** 2) / (uncertainties[i] ** 2)
+    return summ / (N - m)
 
 if __name__ == "__main__":
-    # Load Background file 3sec
-    background_3_counts = get_counts_array('../background20min3sec2024.txt')
 
+    """PART 1"""
     # Load Background file 20 sec
     background_20_counts = get_counts_array('../background20min20sec2024.txt')
     background_20_mean = numpy.mean(background_20_counts)
@@ -54,10 +58,22 @@ if __name__ == "__main__":
     popt, pcov = curve_fit(model_func_1, xdata=x_data, ydata=cesium_20_counts_log,
                            sigma=cesium_20_uncert_log, absolute_sigma=True)
     model_func_1_data = model_func_1(x_data, popt[0], popt[1])
+
     antilog_model_data = []
     for data in model_func_1_data:
         antilog_model_data.append(math.exp(data))
+
     plt.plot(x_data, antilog_model_data)
     plt.xlabel("Time (sec)")
     plt.ylabel("Count")
     plt.show()
+
+    # Chi r^2 and parameter uncertainties
+    print()
+
+    """PART 2"""
+    # Load Background file 3sec
+    background_3_counts = get_counts_array('../background20min3sec2024.txt')
+
+    # Load 3 sec data
+    fiesta_3_counts_raw = get_counts_array("../fiesta20min3sec2024.txt")
