@@ -30,6 +30,19 @@ def reduced_x_r2(N, m, measured_data, model_data, uncertainties):
         summ += ((measured_data[i] - model_data[i]) ** 2) / (uncertainties[i] ** 2)
     return summ / (N - m)
 
+def draw_residual(measured_data, calculated_data, x_axis_data, measured_uncert, title):
+    residuals = []
+    for line in range(len(measured_data)):
+        residuals.append(measured_data[line] - calculated_data[line])
+    plt.errorbar(x_axis_data, residuals, yerr=measured_uncert, fmt=".")
+    plt.xlabel("Time")
+    plt.ylabel("Counts")
+    plt.title(title)
+    plt.axhline(y=0)
+    #plt.figure(figsize=(10, 6))
+    #plt.savefig('.png', dpi=250)
+    plt.show()
+
 
 if __name__ == "__main__":
 
@@ -125,3 +138,12 @@ if __name__ == "__main__":
     plt.show()
 
     #----------------RESIDUALS GO HERE-------------------#
+    # theoretical model
+    draw_residual(cesium_20_counts, theoretical_model_data, x_data,
+                  cesium_20_uncert, "Theoretical model Residual Graph")
+    # model 1/ log model
+    draw_residual(cesium_20_counts, antilog_model_data, x_data,
+                  cesium_20_uncert, "Log model Residual Graph")
+    # model 2 / exponent linear model
+    draw_residual(cesium_20_counts, model_func_2_data, x_data,
+                  cesium_20_uncert, "Exponent model Residual Graph")
