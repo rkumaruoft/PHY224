@@ -39,11 +39,10 @@ if __name__ == "__main__":
     pmf = st.poisson.pmf(x, lam)
     # Create the plot
     plt.plot(x, pmf, 'bo', ms=8)
-    plt.vlines(x, 0, pmf, colors='b', lw=5)
+    plt.vlines(x, 0, pmf, colors='b', lw=5, label="Poisson Distribution")
     plt.title('Poisson Probability Mass Function')
     plt.xlabel('Count')
     plt.ylabel('Probability')
-    plt.show()
 
     # Gaussian
     mean = mu
@@ -53,8 +52,8 @@ if __name__ == "__main__":
     ind = numpy.argsort(x)
     x = x[ind]
     n = n[ind]
-    plt.plot(x, n)
-    plt.title('Gaussion Probability density Function')
+    plt.plot(x, n, label="Gaussian Distribution")
     plt.xlabel('Count')
     plt.ylabel('Probability')
+    plt.legend()
     plt.show()
