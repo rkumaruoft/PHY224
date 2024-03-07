@@ -52,18 +52,18 @@ def draw_curve(x_start, x_end, x_data, y_data, function):
     print(popt[1])
     print(popt[2])
 
-"""def draw_curve_2(time_interval, y_data):
+def draw_curve_2(time_interval, y_data, function):
     this_arr_y = []
     for i in range(len(time_interval)):
         this_arr_y.append(y_data[i])
     this_arr_y = np.array(this_arr_y)
 
-    popt, pcov = curve_fit(RC_eqn, xdata= time_interval, ydata=this_arr_y, maxfev=10000)
-    curve_data = RC_eqn(time_interval, popt[0], popt[1], popt[2])
+    popt, pcov = curve_fit(function, xdata= time_interval, ydata=this_arr_y, maxfev=10000)
+    curve_data = function(time_interval, popt[0], popt[1], popt[2])
     plt.plot(time_interval, curve_data)
     print(popt[0])
     print(popt[1])
-    print(popt[2])"""
+    print(popt[2])
 
 def RC_eqn_V_c(t, a, time_const, b):
     # time const = 1/RC
@@ -72,20 +72,28 @@ def RC_eqn_V_c(t, a, time_const, b):
     return a * (1/2)**(t * time_const) + b * (1.468)
 
 
+def RC_eqn_V_c_up(t, a, time_const, b):
+    # time const = 1/RC
+    #b=RC
+    # v_in=1.468 volts
+    return a * (1/2)**(-t * time_const) + b * (1.468)
+
+
 def RC_eqn_V_r(t, a, time_const, _b):
-    return 1.468*_b - a * (1/2)**(t*time_const)
+    return 1.468*_b - a * (1/2)**(-t*time_const)
 
 
-def RL_eqn_V_r(t, v_input, a, time_const):
+def RL_eqn_V_r(t, a, time_const, b):
     # time const = R/L
     # Resistance = 503 ohm
-    return (503)*a*(1/2)**(-t*time_const) + v_input
+    # a= Resistance * some_const
+    return a * (1/2) ** (t * time_const) + b*(1.4)
 
 
 def LC_eqn_V_c(t, v_input, a, b, time_const):
 
     # time const = 1/sqrt(LC)
-    return a*math.sin(t*time_const) + b*math.cos(t*time_const) + v_input
+    return a*math.sin(-t * time_const) + b*math.cos(t*time_const) + v_input
 
 def LC_eqn_V_l():
     return 1
