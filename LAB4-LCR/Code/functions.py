@@ -47,7 +47,7 @@ def draw_curve(x_start, x_end, x_data, y_data, function):
     this_arr_x = np.array(this_arr_x)
     this_arr_y = np.array(this_arr_y)
 
-    this_arr_x_1 =np.array( [(line - x_start) for line in this_arr_x]) # np.array this
+    this_arr_x_1 =np.array( [(line - x_start) for line in this_arr_x]) #
 
     popt, pcov = curve_fit(function, xdata=this_arr_x_1, ydata=this_arr_y,
                            maxfev=10000)
@@ -77,8 +77,9 @@ def draw_curve_3(x_start, x_end, x_data, y_data, function):
     plt.plot(this_arr_x, curve_data)
     print(popt[0])
     print(popt[1])
+    print(popt[2])
 
-
+# Part 1 RC circuit
 def RC_eqn_V_c(t, v_o, tau):
     # time const = 1/RC
     # b=RC
@@ -92,29 +93,32 @@ def RC_eqn_V_c_up(t, v_0, tau):
     # v_in=1.468 volts
     return v_0 * (1 - (np.exp(-t / tau)))
 
-
+# part 2 RC circuit
 def RC_eqn_V_r(t, v_0, tau):
     # v_0=I_0 * R
-    return RC_eqn_V_c_up(t, v_0, tau)
+    return -v_0 * (np.exp(-t * tau))
 # RC_eqn_V_c_up(t, v_0, tau)
 
 def RC_eqn_V_r_down(t, v_0, tau):
-    return RC_eqn_V_c(t, v_0, tau)
-
+    return v_0 * (np.exp(-t * tau))
+"""
 def log_model(t, v_0, tau):
-    return v_0 * (np.log(t / tau))
+    return v_0 * (np.log(t / tau))"""
 
+# Part 2 RL circuit
 def RL_eqn_V_r(t, a, tau):
     # tau = 1/(R/L)
     # Resistance = 503 ohm
     # a= Resistance * V_0
     # probably R*V_o*math.e**(t/tau)
-    return a * (np.exp(-t / tau))
+    return a * (np.exp(t * tau))
 
 
 def RL_eqn_V_r_up(t, a, tau):
     return a * (1 - (np.exp(-t / tau)))
 
+
+# part 2 LC circuit Equations
 def LC_eqn_V_c(t, a, time_const, p):
 
     # time const = 1/sqrt(LC)
@@ -127,12 +131,12 @@ def LC_eqn_V_l(t, a, time_const, p):
 
 
 # for part 3
-def Z_LR():
-    return 1
+def Z_RL_eqn(om, l, r):
+    return r + (l - (1/om))
 
 
-def Z_RC():
-    return 1
+def Z_RC_eqn(om, c, r):
+    return r - (1 / (om * c))
 
 
 def reduced_x_r2(N, m, measured_data, model_data, uncertainties):
