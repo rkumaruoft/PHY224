@@ -55,6 +55,7 @@ def draw_curve(x_start, x_end, x_data, y_data, function):
     plt.plot(this_arr_x, curve_data)
     print(popt[0])
     print(popt[1])
+    return popt[0], popt[1]
 
 
 def draw_curve_3(x_start, x_end, x_data, y_data, function):

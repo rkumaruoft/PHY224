@@ -31,23 +31,26 @@ if __name__ == '__main__':
 
     # skip the exponential increase sections
     #curves 1
-    draw_curve(-4.63, -3.265, time_data, voltage_data, RC_eqn_V_c)
-    draw_curve(-3.265, -2.046, time_data, voltage_data, RC_eqn_V_c_up)
+    means = []
+    means.append( draw_curve(-4.63, -3.265, time_data, voltage_data, RC_eqn_V_c) )
+    means.append( draw_curve(-3.265, -2.046, time_data, voltage_data, RC_eqn_V_c_up) )
     # # #curves
-    draw_curve(-2.0466, -0.689, time_data, voltage_data, RC_eqn_V_c)
-    draw_curve(-0.689, 0.498, time_data, voltage_data, RC_eqn_V_c_up)
-    # # #curves 3 -0.9,-0.01
-    draw_curve(0.4982, 1.80, time_data, voltage_data, RC_eqn_V_c)
-    draw_curve(1.8, 3.4, time_data, voltage_data, RC_eqn_V_c_up)
+    means.append( draw_curve(-2.0466, -0.689, time_data, voltage_data, RC_eqn_V_c) )
+    means.append( draw_curve(-0.689, 0.498, time_data, voltage_data, RC_eqn_V_c_up) )
+    # # #curves 3
+    means.append( draw_curve(0.4982, 1.80, time_data, voltage_data, RC_eqn_V_c) )
+    means.append( draw_curve(1.8, 3.4, time_data, voltage_data, RC_eqn_V_c_up) )
     # # # curves 4
-    draw_curve(3.41, 4.599, time_data, voltage_data, RC_eqn_V_c)
-
-
-
+    means.append( draw_curve(3.41, 4.599, time_data, voltage_data, RC_eqn_V_c) )
     plt.show()
 
-
-
+    v_mean = 0
+    tau_mean = 0
+    for i in means:
+        v_mean += i[0]
+        tau_mean += i[1]
+    print("mean of v_0", v_mean / len(means))
+    print("mean of tau", tau_mean / len(means))
     # Part 2
 
     #procurement 1 RC
