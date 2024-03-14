@@ -8,14 +8,6 @@ from scipy.optimize import curve_fit
 from functions import *
 
 
-def RL_rise_equation(t, v_in, tau):
-    return v_in * (1 - (math.e ** (-t / tau)))
-
-
-def RL_fall_equation(t, v_in, r):
-    return v_in * np.exp(-1/r * t)
-
-
 if __name__ == '__main__':
     RL_resistor_data = read_file_data("../RL_circuit_resistor_ex2.csv")
     time_data = []
