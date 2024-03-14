@@ -27,13 +27,13 @@ if __name__ == '__main__':
     plt.ylabel("Voltage")
     plt.title("LC Capacitor Voltage")
     plt.axhline(y=0)
-    popt, pcov = curve_fit(LC_eqation, xdata=time_data, ydata=voltage_data, p0=[1, 31723.67559, np.pi / 2])
-    curve_data = LC_eqation(time_data, popt[0], popt[1], abs(popt[2]))
+    popt, pcov = curve_fit(LC_equation, xdata=time_data, ydata=voltage_data, p0=[1, 31723.67559, np.pi / 2])
+    curve_data = LC_equation(time_data, popt[0], popt[1], abs(popt[2]))
     # Using Phase as pi + 0.5 gives a better fit
     # curve_data = LC_eqation(time_data, popt[0], popt[1], np.pi+0.5)
     plt.plot(time_data, curve_data, label="Best Fit Curve")
     omega = popt[1]
-    omega_error = pcov[1][1]
+    omega_error = math.sqrt(pcov[1][1])
     print("LC CIRCUIT")
     print("Omega : ", omega, "Error: ", omega_error)
     LC_val = 1 / (omega ** 2)

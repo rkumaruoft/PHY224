@@ -153,6 +153,6 @@ def reduced_x_r2(N, m, measured_data, model_data, uncertainties):
     return summ / (N - m)
 
 
-def LC_eqation(t, v_input, w, p):
+def LC_equation(t, v_input, w, p):
     # time const = sqrt(LC)
     return v_input * (1 - np.sin((t * w * 1 / (2 * np.pi)) + p))
