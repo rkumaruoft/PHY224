@@ -156,3 +156,11 @@ def reduced_x_r2(N, m, measured_data, model_data, uncertainties):
 def LC_equation(t, v_input, w, p):
     # time const = sqrt(LC)
     return v_input * (1 - np.sin((t * w * 1 / (2 * np.pi)) + p))
+
+
+def RL_rise_equation(t, v_in, tau):
+    return v_in * (1 - (math.e ** (-t / tau)))
+
+
+def RL_fall_equation(t, v_in, r):
+    return v_in * np.exp(-1 / r * t)
