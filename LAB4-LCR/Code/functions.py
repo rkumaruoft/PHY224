@@ -55,6 +55,8 @@ def draw_curve(x_start, x_end, x_data, y_data, function):
     plt.plot(this_arr_x, curve_data)
     print(popt[0])
     print(popt[1])
+    #plt.show()
+    #plot_residual(this_arr_y, curve_data, this_arr_x, 0, "Capacitor voltage Residual", "time (ms)", "voltage (V)")
     return popt[0], pcov[0][0], popt[1], pcov[1][1]
 
 
@@ -146,17 +148,9 @@ def Z_RC_eqn(om, c, r):
     return r - (1 / (om * c))
 
 
-def reduced_x_r2(N, m, measured_data, model_data, uncertainties):
-    summ = 0
-    for i in range(N):
-        summ += ((measured_data[i] - model_data[i]) ** 2) / (uncertainties[i] ** 2)
-    return summ / (N - m)
-
-
 def LC_equation(t, v_input, w, p):
     # time const = sqrt(LC)
     return v_input * (1 - np.sin((t * w * 1 / (2 * np.pi)) + p))
-
 
 def RL_rise_equation(t, v_in, tau):
     return v_in * (1 - (math.e ** (-t / tau)))
@@ -164,3 +158,38 @@ def RL_rise_equation(t, v_in, tau):
 
 def RL_fall_equation(t, v_in, r):
     return v_in * np.exp(-1 / r * t)
+
+
+def reduced_x_r2(N, m, measured_data, model_data, uncertainties):
+    summ = 0
+    for i in range(N):
+        summ += ((measured_data[i] - model_data[i]) ** 2) / (uncertainties[i] ** 2)
+    return summ / (N - m)
+
+
+def plot_residual(measured_data, calculated_data, x_axis_data, measured_uncert, title, xlabel, ylabel):
+    residuals = []
+    for line in range(len(measured_data)):
+        residuals.append(measured_data[line] - calculated_data[line])
+    plt.errorbar(x_axis_data, residuals, yerr=measured_uncert, fmt=".")
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.title(title)
+    plt.axhline(y=0)
+    plt.figure(figsize=(10, 6))
+    plt.savefig('.png', dpi=250)
+    plt.show()
+
+def residual_stuff(time_data, y_data, means, start, end, function):
+    measured_data = []
+    x_axis_data = []
+    for n in range(len(time_data)):
+        if start <= time_data[n] <= end:
+            measured_data.append(y_data[n])
+            x_axis_data.append(time_data[n])
+    x_axis_data = np.array([(line - (start)) for line in x_axis_data])# shift to start to 0
+    print(measured_data)
+    print()
+    print(x_axis_data)
+    calculated_data = function(x_axis_data, means[0][0], means[0][2])# for one curve
+    return measured_data, calculated_data, x_axis_data

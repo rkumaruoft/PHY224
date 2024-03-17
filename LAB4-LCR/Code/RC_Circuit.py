@@ -21,10 +21,10 @@ if __name__ == '__main__':
         time_data.append(this_line[0])
         voltage_data.append(this_line[1])
 
-    plt.errorbar(time_data, voltage_data, fmt=".", label="Capacitor Data")
-    plt.xlabel("Time")
-    plt.ylabel("Voltage")
-    plt.legend("Capacitor")
+    plt.errorbar(time_data, voltage_data, fmt=".", label="Capacitor Data", )
+    plt.xlabel("Time (mili Seconds")
+    plt.ylabel("Voltage (V)")
+    plt.legend(["Capacitor data","Curvefit"])
     plt.title("Capacitor")
 
     plt.axhline(y=0)
@@ -33,6 +33,7 @@ if __name__ == '__main__':
     #curves 1
     means = []
     means.append( draw_curve(-4.63, -3.265, time_data, voltage_data, RC_eqn_V_c) )
+
     means.append( draw_curve(-3.265, -2.046, time_data, voltage_data, RC_eqn_V_c_up) )
     # # #curves
     means.append( draw_curve(-2.0466, -0.689, time_data, voltage_data, RC_eqn_V_c) )
@@ -42,6 +43,7 @@ if __name__ == '__main__':
     means.append( draw_curve(1.8, 3.4, time_data, voltage_data, RC_eqn_V_c_up) )
     # # # curves 4
     means.append( draw_curve(3.41, 4.599, time_data, voltage_data, RC_eqn_V_c) )
+
     plt.show()
 
     v_mean = 0
@@ -58,6 +60,25 @@ if __name__ == '__main__':
     print("mean of tau", tau_mean / len(means))
     print("error of tau mean", 1 / len(means) * np.sqrt(tau_error))
 
+
+    # residual
+
+    measured_data = []
+    x_axis_data = []
+    for n in range(len(time_data)):
+        if -4.63 <= time_data[n] <= -3.265:
+            measured_data.append(voltage_data[n])
+            x_axis_data.append(time_data[n])
+    x_axis_data = np.array([(line - (-4.63)) for line in x_axis_data])# shift to start from 0
+    print(measured_data)
+    print()
+    print(x_axis_data)
+    calculated_data = RC_eqn_V_c(x_axis_data, means[0][0], means[0][2])# for one curve
+
+    plot_residual(measured_data, calculated_data, x_axis_data, 0, "RC Capacitor voltage Residual", "Time (milli-Sec)", "Voltage (V)")
+    plt.show()
+    # measured uncertainty is zero since i do not know the y error of this one.
+
     # Part 2
 
     #procurement 1 RC
@@ -66,7 +87,7 @@ if __name__ == '__main__':
     """
     #&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
     print()
-    draw_data("RC_extra_data_resistor.csv", "RC resistor ex2", "time", "voltage", "ex", 0)
+    draw_data("RC_extra_data_resistor.csv", "RC resistor ex2", "Time (ms)", "Voltage (V)", ["Resistor data", "curve_fit"], 0)
     time_data_1, voltage_data_1 = data_to_xy("RC_extra_data_resistor.csv")
 
     means = []
@@ -102,11 +123,7 @@ if __name__ == '__main__':
     print("error of tau mean", 1 / len(means) * np.sqrt(tau_error))
     ##################################
 
-    # part 3
-    print()
-    draw_data("experiment_3_RC_circuit.csv", "RC AC circuit","frequency", "impedance", "ex", 0)
-    z_data, w_data = data_to_xy("experiment_3_RC_circuit.csv")
-    draw_curve(1.96, 90, z_data, w_data,  Z_RC_eqn)
-    plt.show()
-    draw_data("experiment3_LR_circuit.csv", "LR AC circuit","", "", "ex", 0)
-    plt.show()
+    # residual
+    measured_data, calculated_data, x_axis_data = residual_stuff(time_data_1,
+                                                                 voltage_data_1, means, -0.002499, -0.002004, RC_eqn_V_r)
+    plot_residual(measured_data, calculated_data, x_axis_data, 0, "RC resistor voltage Residual", "Time (milli-Sec)", "Voltage (V)")
