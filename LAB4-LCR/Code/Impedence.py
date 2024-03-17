@@ -60,11 +60,25 @@ if __name__ == '__main__':
     plt.errorbar(lr_freq, lr_phase, yerr=lr_phase_err, fmt=".", label="LR")
 
     popt, pcov = curve_fit(rise_equation, xdata=lr_freq, ydata=lr_phase, sigma=lr_phase_err)
-    fit_data = rise_equation(lr_freq, popt[0], popt[1])
-    plt.plot(lr_freq, fit_data)
+    fit_data2 = rise_equation(lr_freq, popt[0], popt[1])
+    plt.plot(lr_freq, fit_data2)
 
     plt.legend(loc="upper right")
     plt.xlabel("Frequency (kHz)")
     plt.ylabel("Phase Angle (degrees)")
     plt.axhline(y=0)
     plt.show()
+
+
+    # residual rc_freq
+    measured_data = rc_phase
+    calculated_data = fit_data
+    x_axis_data = rc_freq
+    plot_residual(measured_data, calculated_data, x_axis_data, 0, "RC Phase angle Residual", "Frequency (kHz)", "Phase Angle (Degree)")
+
+    measured_data = lr_phase
+    calculated_data = fit_data2
+    x_axis_data = lr_freq
+    plot_residual(measured_data, calculated_data, x_axis_data, 0, "LR Phase angle Residual", "Frequency (kHz)", "Phase Angle (Degree)")
+
+    # LR on top, trippy.
