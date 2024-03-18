@@ -3,6 +3,12 @@ import numpy
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
+def x_r2_metric(N, m, initial_position, speed, measured_distance_data, times, uncertainties):
+    to_sum = []
+    for i in range(N):
+        to_sum.append(((measured_distance_data[i] - motion_equation(times[i], initial_position, speed, -9.8/7)) ** 2)
+                      / (uncertainties[i] ** 2))
+    return sum(to_sum) / (N - m)
 
 def motion_equation(x, initial_position, velocity, acceleration):
     return initial_position + (velocity * x) + (0.5 * acceleration * (x ** 2))
