@@ -52,7 +52,7 @@ if __name__ == '__main__':
 
 
     # fall 1 from 0.99 - 1.47
-    fall_1_time_data = []
+    fall_1_time_data = []4
     fall_1_voltage_data = []
     for index in range(len(time_data)):
         if 0.99 <= time_data[index] <= 1.47:
