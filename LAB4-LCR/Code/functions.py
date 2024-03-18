@@ -30,11 +30,11 @@ def data_to_xy(data):
 def draw_data(data, title, xlabel, ylabel, legend, uncertainty):
     x_data, y_data = data_to_xy(data)
 
-    plt.errorbar(x_data, y_data, yerr=uncertainty, fmt=".", label="Resistance Data")
+    plt.errorbar(x_data, y_data, yerr=uncertainty, fmt=".", label="Resistance Data", markersize=1, elinewidth=0.2)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     plt.legend(legend)
-    plt.title(title)
+    # plt.title(title)
 
 
 def draw_curve(x_start, x_end, x_data, y_data, function):
@@ -177,13 +177,11 @@ def plot_residual(measured_data, calculated_data, x_axis_data, measured_uncert, 
     residuals = []
     for line in range(len(measured_data)):
         residuals.append(measured_data[line] - calculated_data[line])
-    plt.errorbar(x_axis_data, residuals, yerr=measured_uncert, fmt=".")
+    plt.errorbar(x_axis_data, residuals, yerr=measured_uncert, fmt=".", markersize=1, elinewidth=0.2)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
-    plt.title(title)
     plt.axhline(y=0)
-    plt.figure(figsize=(10, 6))
-    plt.savefig('.png', dpi=250)
+    plt.savefig(title+'.png', dpi=250)
     plt.show()
 
 def residual_stuff(time_data, y_data, popt1 , popt2, start, end, function):

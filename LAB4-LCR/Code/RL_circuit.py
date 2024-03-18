@@ -7,7 +7,6 @@ import pylab
 from scipy.optimize import curve_fit
 from functions import *
 
-
 if __name__ == '__main__':
     RL_resistor_data = read_file_data("../RL_circuit_resistor_ex2.csv")
     time_data = []
@@ -22,8 +21,8 @@ if __name__ == '__main__':
     time_data = np.array([(t + min_time) * (10 ** 3) for t in time_data])
     min_voltage = abs(min(voltage_data))
     voltage_data = np.array([v + min_voltage for v in voltage_data])
-    plt.errorbar(time_data, voltage_data, yerr= 0.05,ls="None", marker=".", label="Resistor Data")
-    plt.title("RL Resistor voltage")
+    plt.errorbar(time_data, voltage_data, yerr= 0.05,ls="None", marker=".", label="Resistor Data", markersize=1,
+                 elinewidth=0.2)
     tau_values = []
     tau_errors = []
 
@@ -113,7 +112,6 @@ if __name__ == '__main__':
     tau_errors.append(math.sqrt(pcov[1][1]))
     plt.plot(fall_1_time_data, fall_1_fit_data)
 
-
     # rise 1 from 2.502 - 2.986
     rise_1_time_data = []
     rise_1_voltage_data = []
@@ -131,7 +129,6 @@ if __name__ == '__main__':
     tau_errors.append(math.sqrt(pcov[1][1]))
     plt.plot(rise_1_time_data, rise_1_fit_data)
 
-
     # fall 1 from 2.997 - 3.492
     fall_1_time_data = []
     fall_1_voltage_data = []
@@ -148,8 +145,6 @@ if __name__ == '__main__':
     tau_values.append(popt[1])
     tau_errors.append(math.sqrt(pcov[1][1]))
     plt.plot(fall_1_time_data, fall_1_fit_data)
-
-
 
     # rise 1 from 3.503 - 3.976
     rise_1_time_data = []
@@ -205,18 +200,11 @@ if __name__ == '__main__':
     plt.axhline(y=0)
     plt.xlabel("Time (milliseconds)")
     plt.ylabel("Voltage (volts)")
+    plt.savefig("RL_circuit_resistor_voltage.png", dpi=250)
     plt.show()
 
-
-    print(tau_values)
-    tau_mean = 0
-    tau_error = 0
-    for i in range(len(tau_values)):
-        tau_mean += tau_values[2] # changes
-        tau_error += tau_errors[3] ** 2
-
-    print("mean of tau", tau_mean)
-    print("error of tau", 1 / len(tau_values) * np.sqrt(tau_error))
+    print("mean of tau", numpy.mean(tau_values))
+    print("error of tau", np.sqrt(numpy.sum([t**2 for t in tau_errors])))
 
 
     """ For residuals """
@@ -237,9 +225,9 @@ if __name__ == '__main__':
 
 
     # last curve, fall, just for considertion or an extra look perhaps.
-    measured_data2 = fall_1_voltage_data
-    calculated_data2 = fall_1_fit_data
-    x_axis_data2 = fall_1_time_data
-
-    plot_residual(measured_data2, calculated_data2, x_axis_data2, 0, "RL Resistor voltage Residual (fall, last )", "Time (milli-Sec)", "Voltage (V)")
+    # measured_data2 = fall_1_voltage_data
+    # calculated_data2 = fall_1_fit_data
+    # x_axis_data2 = fall_1_time_data
+    #
+    # plot_residual(measured_data2, calculated_data2, x_axis_data2, 0, "RL Resistor voltage Residual (fall, last )", "Time (milli-Sec)", "Voltage (V)")
 
