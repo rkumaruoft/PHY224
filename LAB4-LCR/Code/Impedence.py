@@ -11,6 +11,14 @@ def rise_equation(t, v_in, tau):
     return v_in * (1 - (math.e ** (-t / tau)))
 
 
+def phi_rc(w, a):
+    return numpy.arctan(-a / w)
+
+
+def z_mod_RC(w, R, C):
+    return R ** 2 + (-1 / w * C)
+
+
 if __name__ == '__main__':
     # RC CIRCUIT
     file1 = open("../experiment_3_RC_circuit.csv", 'r')
@@ -30,16 +38,16 @@ if __name__ == '__main__':
     rc_phase = numpy.array(rc_phase)
     rc_phase_err = numpy.array(rc_phase_err)
 
-    min_phase = abs(min(rc_phase))
-    rc_phase_scaled = numpy.array([p + min_phase for p in rc_phase])
+    # min_phase = abs(min(rc_phase))
+    # rc_phase_scaled = numpy.array([p + min_phase for p in rc_phase])
     plt.errorbar(rc_freq, rc_phase, yerr=rc_phase_err, fmt=".", label="RC")
-
-    popt, pcov = curve_fit(rise_equation, xdata=rc_freq, ydata=rc_phase_scaled, sigma=rc_phase_err)
-    fit_data = rise_equation(rc_freq, popt[0], popt[1])
-    fit_data = numpy.array([f - min_phase for f in fit_data])
-    plt.plot(rc_freq, fit_data)
-
-    # LR circuit
+    #
+    # popt, pcov = curve_fit(rise_equation, xdata=rc_freq, ydata=rc_phase_scaled, sigma=rc_phase_err)
+    # fit_data = rise_equation(rc_freq, popt[0], popt[1])
+    # fit_data = numpy.array([f - min_phase for f in fit_data])
+    # plt.plot(rc_freq, fit_data)
+    #
+    # # LR circuit
     file2 = open("../experiment3_LR_circuit.csv")
     lines = file2.readlines()
     lines.pop(0)
@@ -58,27 +66,32 @@ if __name__ == '__main__':
     lr_phase_err = numpy.array(lr_phase_err)
 
     plt.errorbar(lr_freq, lr_phase, yerr=lr_phase_err, fmt=".", label="LR")
-
-    popt, pcov = curve_fit(rise_equation, xdata=lr_freq, ydata=lr_phase, sigma=lr_phase_err)
-    fit_data2 = rise_equation(lr_freq, popt[0], popt[1])
-    plt.plot(lr_freq, fit_data2)
+    #
+    # popt, pcov = curve_fit(rise_equation, xdata=lr_freq, ydata=lr_phase, sigma=lr_phase_err)
+    # fit_data2 = rise_equation(lr_freq, popt[0], popt[1])
+    # plt.plot(lr_freq, fit_data2)
 
     plt.legend(loc="upper right")
     plt.xlabel("Frequency (kHz)")
     plt.ylabel("Phase Angle (degrees)")
     plt.axhline(y=0)
+    # plt.show()
+
+    popt, pcov = curve_fit(phi_rc, xdata=rc_freq, ydata=rc_phase, sigma=rc_phase_err, p0=[1990.04975124])
+    print(popt)
+    rc_phase_fit_data = phi_rc(rc_freq, popt[0])
+    plt.plot(rc_freq, rc_phase_fit_data)
     plt.show()
 
-
-    # residual rc_freq
-    measured_data = rc_phase
-    calculated_data = fit_data
-    x_axis_data = rc_freq
-    plot_residual(measured_data, calculated_data, x_axis_data, 0, "RC Phase angle Residual", "Frequency (kHz)", "Phase Angle (Degree)")
-
-    measured_data = lr_phase
-    calculated_data = fit_data2
-    x_axis_data = lr_freq
-    plot_residual(measured_data, calculated_data, x_axis_data, 0, "LR Phase angle Residual", "Frequency (kHz)", "Phase Angle (Degree)")
-
-    # LR on top, trippy.
+    # # residual rc_freq
+    # measured_data = rc_phase
+    # calculated_data = fit_data
+    # x_axis_data = rc_freq
+    # plot_residual(measured_data, calculated_data, x_axis_data, 0, "RC Phase angle Residual", "Frequency (kHz)", "Phase Angle (Degree)")
+    #
+    # measured_data = lr_phase
+    # calculated_data = fit_data2
+    # x_axis_data = lr_freq
+    # plot_residual(measured_data, calculated_data, x_axis_data, 0, "LR Phase angle Residual", "Frequency (kHz)", "Phase Angle (Degree)")
+    #
+    # # LR on top, trippy.

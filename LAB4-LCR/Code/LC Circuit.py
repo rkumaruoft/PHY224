@@ -53,7 +53,7 @@ if __name__ == '__main__':
     #
     # plot_residual(voltage_data, aligned_curve_data, time_data , 0.05, "LC Capacitor voltage Residual", "Time (milli-Sec)", "Voltage (V)")
                                             # align the fit
-    plot_residual(voltage_data, curve_data, time_data, 0, "LC Capacitor voltage Residual", "Time (milli-Sec)",
+    plot_residual(voltage_data, curve_data, time_data, 0.05, "LC Capacitor voltage Residual", "Time (milli-Sec)",
                   "Voltage (V)")
     # align the fit
     print(voltage_data)
