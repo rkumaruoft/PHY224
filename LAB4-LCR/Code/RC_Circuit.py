@@ -21,7 +21,7 @@ if __name__ == '__main__':
         time_data.append(this_line[0])
         voltage_data.append(this_line[1])
 
-    plt.errorbar(time_data, voltage_data, fmt=".", label="Capacitor Data", )
+    plt.errorbar(time_data, voltage_data, yerr=0.05, fmt=".", label="Capacitor Data", )
     plt.xlabel("Time (mili Seconds")
     plt.ylabel("Voltage (V)")
     plt.legend(["Capacitor data","Curvefit"])
@@ -91,7 +91,7 @@ if __name__ == '__main__':
     print("chi^2 of rise: ", reduced_x_r2_abs(len(measured_data2), 2, measured_data2, calculated_data2, 0.05))
 
 
-    # Part 2
+    # Part 2 Resistor data
 
     #procurement 1 RC
     ################
@@ -99,7 +99,7 @@ if __name__ == '__main__':
     """
     #&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
     print()
-    draw_data("RC_extra_data_resistor.csv", "RC resistor ex2", "Time (ms)", "Voltage (V)", ["Resistor data", "curve_fit"], 0)
+    draw_data("RC_extra_data_resistor.csv", "RC resistor ex2", "Time (ms)", "Voltage (V)", ["Resistor data", "curve_fit"], 0.05)
     time_data_1, voltage_data_1 = data_to_xy("RC_extra_data_resistor.csv")
 
     means = []

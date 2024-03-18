@@ -22,7 +22,7 @@ if __name__ == '__main__':
     time_data = np.array([(t + min_time) * (10 ** 3) for t in time_data])
     min_voltage = abs(min(voltage_data))
     voltage_data = np.array([v + min_voltage for v in voltage_data])
-    plt.errorbar(time_data, voltage_data, ls="None", marker=".", label="Resistor Data")
+    plt.errorbar(time_data, voltage_data, yerr= 0.05,ls="None", marker=".", label="Resistor Data")
     plt.title("RL Resistor voltage")
     tau_values = []
     tau_errors = []
@@ -220,12 +220,26 @@ if __name__ == '__main__':
 
 
     """ For residuals """
-    plot_residual(measured_data1, calculated_data1, x_axis_data1, 0, "RL Resistor voltage Residual (rise)", "Time (milli-Sec)", "Voltage (V)")
-    plot_residual(measured_data2, calculated_data2, x_axis_data2, 0, "RL Resistor voltage Residual (fall)", "Time (milli-Sec)", "Voltage (V)")
+    plot_residual(measured_data1, calculated_data1, x_axis_data1, 0.05, "RL Resistor voltage Residual (rise)", "Time (milli-Sec)", "Voltage (V)")
+    #chi_r^2
+    # for the first rise
+    print("chi^2 of rise: ", reduced_x_r2_abs(len(measured_data1), 2, measured_data1, calculated_data1, 0.05))
 
-    # last curve, fall
+    plot_residual(measured_data2, calculated_data2, x_axis_data2, 0.05, "RL Resistor voltage Residual (fall)", "Time (milli-Sec)", "Voltage (V)")
+
+    #chi_r^2
+    # for the first rise
+    print("chi^2 of fall: ", reduced_x_r2_abs(len(measured_data2), 2, measured_data2, calculated_data2, 0.05))
+
+
+
+
+
+
+    # last curve, fall, just for considertion or an extra look perhaps.
     measured_data2 = fall_1_voltage_data
     calculated_data2 = fall_1_fit_data
     x_axis_data2 = fall_1_time_data
 
-    plot_residual(measured_data2, calculated_data2, x_axis_data2, 0, "RL Resistor voltage Residual (fall)", "Time (milli-Sec)", "Voltage (V)")
+    plot_residual(measured_data2, calculated_data2, x_axis_data2, 0, "RL Resistor voltage Residual (fall, last )", "Time (milli-Sec)", "Voltage (V)")
+
