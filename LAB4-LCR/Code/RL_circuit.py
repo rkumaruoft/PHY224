@@ -44,6 +44,13 @@ if __name__ == '__main__':
     tau_errors.append(math.sqrt(pcov[1][1]))
     plt.plot(rise_1_time_data, rise_1_fit_data)
 
+    """ For Residual """
+
+
+    measured_data1 = rise_1_voltage_data
+    calculated_data1 = rise_1_fit_data
+    x_axis_data1 = rise_1_time_data
+
 
     # fall 1 from 0.99 - 1.47
     fall_1_time_data = []
@@ -62,7 +69,17 @@ if __name__ == '__main__':
     tau_errors.append(math.sqrt(pcov[1][1]))
     plt.plot(fall_1_time_data, fall_1_fit_data)
 
-    # rise 1 from 1.501 - 1.97
+    """ For Residual """
+
+
+    measured_data2 = fall_1_voltage_data
+    calculated_data2 = fall_1_fit_data
+    x_axis_data2 = fall_1_time_data
+
+
+
+
+# rise 1 from 1.501 - 1.97
     rise_1_time_data = []
     rise_1_voltage_data = []
     for index in range(len(time_data)):
@@ -202,11 +219,13 @@ if __name__ == '__main__':
     print("error of tau", 1 / len(tau_values) * np.sqrt(tau_error))
 
 
-    # residual
+    """ For residuals """
+    plot_residual(measured_data1, calculated_data1, x_axis_data1, 0, "RL Resistor voltage Residual (rise)", "Time (milli-Sec)", "Voltage (V)")
+    plot_residual(measured_data2, calculated_data2, x_axis_data2, 0, "RL Resistor voltage Residual (fall)", "Time (milli-Sec)", "Voltage (V)")
 
-    # using the last curve-fit
-    measured_data = fall_1_voltage_data
-    calculated_data = fall_1_fit_data
-    x_axis_data = fall_1_time_data
-    plot_residual(measured_data, calculated_data, x_axis_data, 0, "RL Resistor voltage Residual", "Time (milli-Sec)", "Voltage (V)")
+    # last curve, fall
+    measured_data2 = fall_1_voltage_data
+    calculated_data2 = fall_1_fit_data
+    x_axis_data2 = fall_1_time_data
 
+    plot_residual(measured_data2, calculated_data2, x_axis_data2, 0, "RL Resistor voltage Residual (fall)", "Time (milli-Sec)", "Voltage (V)")
