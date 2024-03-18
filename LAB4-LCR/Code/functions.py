@@ -53,8 +53,8 @@ def draw_curve(x_start, x_end, x_data, y_data, function):
                            maxfev=10000)
     curve_data = function(this_arr_x_1, popt[0], popt[1])
     plt.plot(this_arr_x, curve_data)
-    print(popt[0])
-    print(popt[1])
+    #print(popt[0])
+    #print(popt[1])
     #plt.show()
     #plot_residual(this_arr_y, curve_data, this_arr_x, 0, "Capacitor voltage Residual", "time (ms)", "voltage (V)")
     return popt[0], pcov[0][0], popt[1], pcov[1][1]
@@ -78,9 +78,9 @@ def draw_curve_3(x_start, x_end, x_data, y_data, function):
                            maxfev=10000)
     curve_data = function(this_arr_x_1, popt[0], popt[1], popt[2])
     plt.plot(this_arr_x, curve_data)
-    print(popt[0])
-    print(popt[1])
-    print(popt[2])
+    #print(popt[0])
+    #print(popt[1])
+    #print(popt[2])
 
 
 # Part 1 RC circuit
@@ -167,6 +167,12 @@ def reduced_x_r2(N, m, measured_data, model_data, uncertainties):
     return summ / (N - m)
 
 
+def reduced_x_r2_abs(N, m, measured_data, model_data, uncertainty):
+    summ = 0
+    for i in range(N):
+        summ += ((measured_data[i] - model_data[i]) ** 2) / (uncertainty ** 2)
+    return summ / (N - m)
+
 def plot_residual(measured_data, calculated_data, x_axis_data, measured_uncert, title, xlabel, ylabel):
     residuals = []
     for line in range(len(measured_data)):
@@ -180,7 +186,7 @@ def plot_residual(measured_data, calculated_data, x_axis_data, measured_uncert, 
     plt.savefig('.png', dpi=250)
     plt.show()
 
-def residual_stuff(time_data, y_data, means, start, end, function):
+def residual_stuff(time_data, y_data, popt1 , popt2, start, end, function):
     measured_data = []
     x_axis_data = []
     for n in range(len(time_data)):
@@ -188,8 +194,8 @@ def residual_stuff(time_data, y_data, means, start, end, function):
             measured_data.append(y_data[n])
             x_axis_data.append(time_data[n])
     x_axis_data = np.array([(line - (start)) for line in x_axis_data])# shift to start to 0
-    print(measured_data)
+    #print(measured_data)
     print()
-    print(x_axis_data)
-    calculated_data = function(x_axis_data, means[0][0], means[0][2])# for one curve
+    #print(x_axis_data)
+    calculated_data = function(x_axis_data, popt1, popt2)# for one curve
     return measured_data, calculated_data, x_axis_data

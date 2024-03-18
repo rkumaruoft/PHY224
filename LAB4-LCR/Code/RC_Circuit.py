@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
 
     # residual
-
+    # fall
     measured_data = []
     x_axis_data = []
     for n in range(len(time_data)):
@@ -70,14 +70,26 @@ if __name__ == '__main__':
             measured_data.append(voltage_data[n])
             x_axis_data.append(time_data[n])
     x_axis_data = np.array([(line - (-4.63)) for line in x_axis_data])# shift to start from 0
-    print(measured_data)
+    #print(measured_data)
     print()
-    print(x_axis_data)
+    #print(x_axis_data)
     calculated_data = RC_eqn_V_c(x_axis_data, means[0][0], means[0][2])# for one curve
 
-    plot_residual(measured_data, calculated_data, x_axis_data, 0, "RC Capacitor voltage Residual", "Time (milli-Sec)", "Voltage (V)")
+    plot_residual(measured_data, calculated_data, x_axis_data, 0.05, "RC Capacitor voltage Residual", "Time (milli-Sec)", "Voltage (V)")
     plt.show()
-    # measured uncertainty is zero since i do not know the y error of this one.
+
+    # rise
+    measured_data2, calculated_data2, x_axis_data2 = residual_stuff(time_data,
+                                                                    voltage_data, means[1][0], means[1][2], -3.265, -2.046, RC_eqn_V_c_up)
+
+    plot_residual(measured_data2, calculated_data2, x_axis_data2, 0.05, "RC Capacitor voltage Residual (rise)", "Time (milli-Sec)", "Voltage (V)")
+    plt.show()
+
+    # chi_r^2
+    print("chi^2 of fall: ", reduced_x_r2_abs(len(measured_data), 2, measured_data, calculated_data, 0.05))
+    # first fall
+    print("chi^2 of rise: ", reduced_x_r2_abs(len(measured_data2), 2, measured_data2, calculated_data2, 0.05))
+
 
     # Part 2
 
@@ -93,7 +105,7 @@ if __name__ == '__main__':
     means = []
 
     means.append( draw_curve(-0.002499, -0.002004, time_data_1, voltage_data_1, RC_eqn_V_r))
-    means.append( draw_curve(-0.001997, -0.001498, time_data_1, voltage_data_1, RC_eqn_V_r))
+    means.append( draw_curve(-0.001997, -0.001501, time_data_1, voltage_data_1, RC_eqn_V_r))
     means.append( draw_curve(-0.001498, -0.001003, time_data_1, voltage_data_1, RC_eqn_V_r))
     means.append( draw_curve(-0.001, -0.000505, time_data_1, voltage_data_1, RC_eqn_V_r))
     means.append( draw_curve(-0.000497, -0.000006, time_data_1, voltage_data_1, RC_eqn_V_r))
@@ -123,7 +135,21 @@ if __name__ == '__main__':
     print("error of tau mean", 1 / len(means) * np.sqrt(tau_error))
     ##################################
 
-    # residual
-    measured_data, calculated_data, x_axis_data = residual_stuff(time_data_1,
-                                                                 voltage_data_1, means, -0.002499, -0.002004, RC_eqn_V_r)
-    plot_residual(measured_data, calculated_data, x_axis_data, 0, "RC resistor voltage Residual", "Time (milli-Sec)", "Voltage (V)")
+    """ Residuals"""
+
+    measured_data1, calculated_data1, x_axis_data1 = residual_stuff(time_data_1,
+                                                                 voltage_data_1, means[0][0], means[0][2], -0.002499, -0.002004, RC_eqn_V_r)
+    measured_data2, calculated_data2, x_axis_data2 = residual_stuff(time_data_1,
+                                                                    voltage_data_1, means[1][0], means[1][2], -0.001997, -0.001501, RC_eqn_V_r)
+
+    plot_residual(measured_data1, calculated_data1, x_axis_data1, 0.05, "RC resistor voltage Residual (rise)", "Time (milli-Sec)", "Voltage (V)")
+    plt.show()
+
+    plot_residual(measured_data2, calculated_data2, x_axis_data2, 0.05, "RC resistor voltage Residual (drop)", "Time (milli-Sec)", "Voltage (V)")
+    plt.show()
+
+    """ chi_r^2"""
+    # for the first rise
+    print("chi^2 of rise: ", reduced_x_r2_abs(len(measured_data1), 2, measured_data1, calculated_data1, 0.05))
+    # first fall
+    print("chi^2 of fall: ", reduced_x_r2_abs(len(measured_data2), 2, measured_data2, calculated_data2, 0.05))
