@@ -24,8 +24,8 @@ if __name__ == '__main__':
 
     plt.errorbar(time_data, voltage_data, yerr=0.05, ls="None", marker=".", label="Capacitor Data", markersize=1,
                  elinewidth=0.1)
-    plt.xlabel("Time (milli-Sec)")
-    plt.ylabel("Voltage (V)")
+    plt.xlabel("Time (milli-Seconds)")
+    plt.ylabel("Voltage (Volts)")
 
     plt.axhline(y=0)
 
@@ -53,8 +53,8 @@ if __name__ == '__main__':
     #
     # plot_residual(voltage_data, aligned_curve_data, time_data , 0.05, "LC Capacitor voltage Residual", "Time (milli-Sec)", "Voltage (V)")
                                             # align the fit
-    plot_residual(voltage_data, curve_data, time_data, 0.05, "LC Capacitor voltage Residual", "Time (milli-Sec)",
-                  "Voltage (V)")
+    plot_residual(voltage_data, curve_data, time_data, 0.05, "", "Time (milli-Seconds)",
+                  "Voltage (Volts)")
     # align the fit
     print(voltage_data)
     print()

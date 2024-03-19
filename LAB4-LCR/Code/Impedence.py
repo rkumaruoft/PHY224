@@ -6,7 +6,6 @@ import pylab
 from scipy.optimize import curve_fit
 from functions import *
 
-
 def rise_equation(t, v_in, tau):
     return v_in * (1 - (math.e ** (-t / tau)))
 
@@ -70,8 +69,8 @@ if __name__ == '__main__':
 
     popt, pcov = curve_fit(phi_rl, xdata=lr_freq, ydata=lr_phase, sigma=lr_phase_err)
     print(popt)
-    rc_phase_fit_data = phi_rl(rc_freq, popt[0])
-    plt.plot(rc_freq, rc_phase_fit_data)
+    rl_phase_fit_data = phi_rl(lr_freq, popt[0])
+    plt.plot(lr_freq, rl_phase_fit_data)
 
     plt.legend(loc="upper right")
     plt.xlabel("Frequency (kHz)")
@@ -79,15 +78,17 @@ if __name__ == '__main__':
     plt.axhline(y=0)
     plt.show()
 
-    # # residual rc_freq
-    # measured_data = rc_phase
-    # calculated_data = fit_data
-    # x_axis_data = rc_freq
-    # plot_residual(measured_data, calculated_data, x_axis_data, 0, "RC Phase angle Residual", "Frequency (kHz)", "Phase Angle (Degree)")
-    #
-    # measured_data = lr_phase
-    # calculated_data = fit_data2
-    # x_axis_data = lr_freq
-    # plot_residual(measured_data, calculated_data, x_axis_data, 0, "LR Phase angle Residual", "Frequency (kHz)", "Phase Angle (Degree)")
-    #
+    # residual rc_freq
+    measured_data = rc_phase
+    calculated_data = rc_phase_fit_data
+    x_axis_data = rc_freq
+    plot_residual(measured_data, calculated_data, x_axis_data, 0, "RC Phase angle Residual", "Frequency (kHz)", "Phase Angle (Degree)")
+    print("RC impedance chi_r2: ",reduced_x_r2(len(measured_data), 1, measured_data, calculated_data, rc_phase_err))
+
+    measured_data = lr_phase #
+    calculated_data = rl_phase_fit_data
+    x_axis_data = lr_freq
+    plot_residual(measured_data, calculated_data, x_axis_data, 0, "LR Phase angle Residual", "Frequency (kHz)", "Phase Angle (Degree)")
+    print("LR impedance chi_r2: ", reduced_x_r2(len(measured_data), 1, measured_data, calculated_data, lr_phase_err))
     # # LR on top, trippy.
+
