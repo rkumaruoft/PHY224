@@ -40,9 +40,9 @@ if __name__ == '__main__':
     omega_error = math.sqrt(pcov[1][1])
     print("LC CIRCUIT")
     print("Omega : ", omega, "Error: ", omega_error)
-    LC_val = 1 / (omega ** 2)
-    LC_err = (2 / (omega ** 3)) * omega_error
-    print("LC : ", LC_val, "Error: ", LC_err)
+    LC_val = 1 / (omega)
+    LC_err = (1 / (omega ** 2)) * omega_error
+    print("sqrt(LC) : ", LC_val, "Error: ", LC_err)
     plt.legend(loc='upper left')
     plt.savefig("LC_circuit_capacitor_volatge.png", dpi=250)
     plt.show()
