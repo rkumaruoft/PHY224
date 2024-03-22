@@ -1,9 +1,12 @@
 import matplotlib.pyplot as plt
+import numpy
 import pylab
 from scipy.optimize import curve_fit
 import numpy as np
 import math
+
 """Light Interference and diffraction lab"""
+
 
 def read_file_data(filename):
     file = open(filename, 'r')
@@ -18,8 +21,8 @@ def data_to_xy(data):
     x_data = []
     y_data = []
     for line in data:
-        line.replace("\t", '') # replace white space
-        line.replace("\n", '') # replace line jump
+        line.replace("\t", '')  # replace white space
+        line.replace("\n", '')  # replace line jump
         this_line = [float(num) for num in line.split()]
         x_data.append(this_line[0])
         y_data.append(this_line[1])
@@ -28,7 +31,7 @@ def data_to_xy(data):
 
 def draw_data(data, x_ax, y_ax, title, legend):
     x_data, y_data = data_to_xy(data)
-    x_data, y_data = crop_data(x_data, y_data, 1, 1) ################# delete this to draw the uncropped data
+    # x_data, y_data = crop_data(x_data, y_data, 1, 1) ################# delete this to draw the uncropped data
 
     plt.errorbar(x_data, y_data, fmt=".", label="", markersize=1, elinewidth=0.2)
     plt.xlabel(x_ax)
@@ -39,17 +42,11 @@ def draw_data(data, x_ax, y_ax, title, legend):
 
 
 def draw_data_and_curve(data, x_ax, y_ax, title, legend, function):
-    x_data, y_data = data_to_xy(data)
-    xdata, ydata = crop_data(x_data, y_data, 1, 1)##################### delete this to draw the uncropped data
-
-    popt, pcov = curve_fit(function, xdata, ydata,
-                           maxfev=1000)
-    print("popt", popt)
-    curve_data = function(xdata, popt[0])
-    print("popt", popt)
-    plt.plot(xdata, curve_data)
-    #plt.show()
-    draw_data(data, x_ax, y_ax, title, legend) # the show() function is in here
+    xdata, ydata = data_to_xy(data)
+    popt, pcov = curve_fit(function, xdata, ydata)
+    curve_data = function(xdata, popt[0], popt[1])
+    plt.show()
+    draw_data(data, x_ax, y_ax, title, legend)  # the show() function is in here
 
 
 def crop_data(x_data, y_data, x_start, x_end):
@@ -62,5 +59,5 @@ def crop_data(x_data, y_data, x_start, x_end):
     return crop_x, crop_y
 
 
-def diffraction(x, I):
-    return I * ((np.sin(x)/ x ) ** 2)
+def diffraction(x, I, p, c, b):
+    return I * ((np.sin((b * x) - p)/((b * x) - p)) ** 2) + c

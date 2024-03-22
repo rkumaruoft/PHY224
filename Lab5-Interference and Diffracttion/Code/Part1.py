@@ -6,4 +6,4 @@ from scipy.optimize import curve_fit
 from functions import *
 
 if __name__ == '__main__':
-    draw_data_and_curve("Single Slit - 0.02- Data.txt", "x", "y", "", "Data", diffraction)
+    draw_data_and_curve("../Single Slit - 0.02- Data.txt", "x", "y", "", "Data", diffraction)
