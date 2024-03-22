@@ -1,5 +1,5 @@
-Interference and Diffraction Data File Mon, Mar 11, 2024 6:13 PM
-Sensor Position (Meters)	Light Intensity (Volts)
+#Interference and Diffraction Data File Mon, Mar 11, 2024 6:13 PM
+#Sensor Position (Meters)	Light Intensity (Volts)
 0.00000	-0.00856
 0.00000	-0.00743
 0.00000	-0.01194
