@@ -5,9 +5,6 @@ import pylab
 from scipy.optimize import curve_fit
 from functions import *
 
-def func(x, i):
-    return np
-
 if __name__ == '__main__':
     # single slit
     xdata, ydata = data_to_xy("../Single Slit - 0.02- Data.txt")
@@ -15,7 +12,7 @@ if __name__ == '__main__':
     ydata = numpy.array(ydata)
     min_x = abs(min(xdata))
     max_I = abs(max(ydata))
-    # xdata = numpy.array([x + min_x for x in xdata])
+    xdata = numpy.array([x + min_x for x in xdata])
     max_I_x = xdata[int(numpy.mean(numpy.argmax(ydata)))]
     plt.errorbar(xdata, ydata, fmt=".", label="", markersize=1, elinewidth=0.2)
     popt, pcov = curve_fit(diffraction, xdata, ydata, p0=[max_I, max_I_x, 0.02, 10])
@@ -26,6 +23,8 @@ if __name__ == '__main__':
     plt.axhline(y=0)
     plt.legend()
     plt.show()
+
+    # find the width using the theta = popt[3]
 
 
 

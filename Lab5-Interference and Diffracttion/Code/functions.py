@@ -59,5 +59,5 @@ def crop_data(x_data, y_data, x_start, x_end):
     return crop_x, crop_y
 
 
-def diffraction(x, I, p, c, b):
-    return I * ((np.sin((b * x) - p)/((b * x) - p)) ** 2) + c
+def diffraction(x, I, p, c, d):
+    return I * ((np.sin((d * x) - p)/((d * x) - p)) ** 2) + c
