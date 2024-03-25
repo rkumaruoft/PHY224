@@ -6,40 +6,35 @@ from scipy.optimize import curve_fit
 from functions import *
 
 if __name__ == '__main__':
-    xdata, ydata = data_to_xy("../Double Slit -0.04-0.25- Data1.txt")
+    xdata, ydata = data_to_xy("C:\Year2\Phy224\PythonCode\Lab5-Interference and Diffracttion"
+                              "\More Data\Double_slit_0.04_0.25.txt")
 
-    D = 50.6
+    D = 0.706
     wavelength = 515 * (10 ** -9)
     min_x = abs(min(xdata))
     max_I = abs(max(ydata))
+    min_I = abs(min(ydata))
     xdata = numpy.array([x + min_x for x in xdata])
     xdata = numpy.array(xdata)
     ydata = numpy.array(ydata)
     max_I_x = xdata[int(numpy.mean(numpy.argmax(ydata)))]
-
     x_data_crop = []
     y_data_crop = []
     for index in range(len(xdata)):
-        if 0.0514998 <= xdata[index] <= 0.065224:
-            x_data_crop.append(xdata[index] / D)
+        # if 0.0557 <= xdata[index] <= 0.0733:
+            x_data_crop.append(xdata[index])
             y_data_crop.append(ydata[index])
-
-    for i in range(len(x_data_crop)):
-        print(x_data_crop[i], ",", y_data_crop[i])
-
     min_x = abs(min(x_data_crop))
     max_I = abs(max(y_data_crop))
     xdata = numpy.array(x_data_crop)
     ydata = numpy.array(y_data_crop)
-
     plt.errorbar(xdata, ydata, fmt=".", label="", markersize=1, elinewidth=0.2)
-    # popt, pcov = curve_fit(diffraction, xdata, ydata, p0=[max_I, 0.11, 0, 10], maxfev=1000000)
 
-    popt, pcov = curve_fit(double_slit_intensity, xdata, ydata,
-                           p0=[0.25 * (10 ** -3), 0.04 * (10 ** -3), wavelength, max_I])
-    curve_data = double_slit_intensity(xdata, *popt)
-    plt.plot(xdata, curve_data)
-    plt.xlabel("Location (m)")
+    # popt, pcov = curve_fit(cos_2, xdata, ydata, p0=[max_I, (numpy.pi * 0.00025 / (wavelength * D)), 0, -0.01])
+    # cos_2_data = cos_2(xdata, popt[0] * 2, popt[1], popt[2], popt[3])
+    # plt.plot(xdata, cos_2_data)
+    # print(popt[1]*wavelength*D/numpy.pi)
+    plt.xlabel("Location")
     plt.ylabel("Intensity")
     plt.axhline(y=0)
     plt.legend()

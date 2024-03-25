@@ -63,8 +63,13 @@ def diffraction(x, I, p, c, d):
     return I * ((np.sin((d * x) - p) / ((d * x) - p)) ** 2) + c
 
 
-def double_slit_intensity(theta, d, a, wavelength, I0):
-    alpha = (np.pi * d / wavelength) * np.sin(theta)
-    beta = (np.pi * a / wavelength) * np.sin(theta)
-    intensity = I0 * ((np.sin(alpha) / alpha) ** 2) * (np.cos(beta) ** 2)
+def double_slit_intensity(theta, d, a, wavelength, I0, c, b):
+    theta += b
+    alpha = (np.pi * d / wavelength) * theta
+    beta = (np.pi * a / wavelength) * theta
+    intensity = I0 / (theta ** 2) * ((np.sin(alpha) / alpha) ** 2) * (np.cos(beta) ** 2) + c
     return intensity
+
+
+def cos_2(x, I, w, p, c):
+    return I * (numpy.cos((w * x + p)) ** 2) + c
