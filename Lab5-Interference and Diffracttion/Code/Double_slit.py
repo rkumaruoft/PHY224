@@ -36,13 +36,5 @@ if __name__ == '__main__':
     plt.ylabel("Intensity")
     plt.axhline(y=0)
     plt.legend()
-
-    def sin_x(x, c):
-        return numpy.sinc(c*x)
-
-    y = sin_x(xdata, 0.0117)
-    print(y)
-    plt.plot(xdata, y)
-
     plt.show()
 

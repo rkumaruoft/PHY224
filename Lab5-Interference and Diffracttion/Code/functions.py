@@ -60,4 +60,8 @@ def crop_data(x_data, y_data, x_start, x_end):
 
 
 def diffraction(x, I, p, c, d):
-    return I * ((np.sin((d * x) - p)/((d * x) - p)) ** 2) + c
+    return I * ((np.sin((d * x) - p) / ((d * x) - p)) ** 2) + c
+
+def eq(theta, I, w, c, p):
+    return I * ((np.sin((w * np.sin(theta) - p)) / ((w * np.sin(theta)) - p)) ** 2) + c
+
