@@ -30,6 +30,7 @@ if __name__ == '__main__':
     plt.axhline(y=0)
     plt.legend()
     plt.show()
+
     wavelength = 515 * (10 ** -9)
     slit_width = popt[3] * wavelength/numpy.pi
     print(slit_width)

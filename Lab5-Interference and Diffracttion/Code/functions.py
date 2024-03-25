@@ -62,6 +62,9 @@ def crop_data(x_data, y_data, x_start, x_end):
 def diffraction(x, I, p, c, d):
     return I * ((np.sin((d * x) - p) / ((d * x) - p)) ** 2) + c
 
-def eq(theta, I, w, c, p):
-    return I * ((np.sin((w * np.sin(theta) - p)) / ((w * np.sin(theta)) - p)) ** 2) + c
 
+def double_slit_intensity(theta, d, a, wavelength, I0):
+    alpha = (np.pi * d / wavelength) * np.sin(theta)
+    beta = (np.pi * a / wavelength) * np.sin(theta)
+    intensity = I0 * ((np.sin(alpha) / alpha) ** 2) * (np.cos(beta) ** 2)
+    return intensity
