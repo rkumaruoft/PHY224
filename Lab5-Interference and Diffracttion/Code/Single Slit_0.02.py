@@ -9,7 +9,7 @@ if __name__ == '__main__':
     # single slit
 
     D = 0.526
-    xdata, ydata = data_to_xy("../Single Slit - 0.02- Data.txt")
+    xdata, ydata = data_to_xy("C:\Users\arthu\PycharmProjects\PHY224\Lab5-Interference and Diffracttion\More Data\Single_Slit_0.02.txt")
     xdata.reverse()
     ydata.reverse()
     xdata = numpy.array(xdata)
