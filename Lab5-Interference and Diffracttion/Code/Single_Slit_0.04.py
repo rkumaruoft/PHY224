@@ -9,8 +9,7 @@ if __name__ == '__main__':
     # single slit
 
     D = 0.526
-    xdata, ydata = data_to_xy("C:\Year2\Phy224\PythonCode\Lab5-Interference "
-                              "and Diffracttion\Single Slit - 0.04- Data2.txt")
+    xdata, ydata = data_to_xy("C:\Year2\Phy224\PythonCode\Lab5-Interference and Diffracttion\Single Slit - 0.04- Data2.txt")
 
     xdata = numpy.array(xdata)
 

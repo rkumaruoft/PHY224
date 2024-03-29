@@ -21,7 +21,7 @@ if __name__ == '__main__':
     x_data_crop = []
     y_data_crop = []
     for index in range(len(xdata)):
-        # if 0.0557 <= xdata[index] <= 0.0733:
+        if 0.0557 <= xdata[index] <= 0.0733:
             x_data_crop.append(xdata[index])
             y_data_crop.append(ydata[index])
     min_x = abs(min(x_data_crop))
