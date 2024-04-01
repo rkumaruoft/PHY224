@@ -49,6 +49,7 @@ def draw_data_and_curve(data, x_ax, y_ax, title, legend, function, amplitude):
     min_x = abs(min(xdata))
     max_I = abs(max(ydata))
     max_I_x = xdata[int(numpy.mean(numpy.argmax(ydata)))]
+
     popt, pcov = curve_fit(function, xdata, ydata, p0=[max_I, max_I_x, 0.02, 11])
 
     popt[0] = amplitude # fixing the amplitude
@@ -67,7 +68,30 @@ def draw_data_and_curve(data, x_ax, y_ax, title, legend, function, amplitude):
     plt.title(title)
     plt.show()
 
+def draw_data_and_curve2(data, x_ax, y_ax, title, legend, function):
+    xdata, ydata = data_to_xy(data)
+    xdata = numpy.array(xdata)
+    # xdata = numpy.array([x / D for x in xdata])
+    ydata = numpy.array(ydata)
+    min_x = abs(min(xdata))
+    max_I = abs(max(ydata))
+    max_I_x = xdata[int(numpy.mean(numpy.argmax(ydata)))]
 
+    popt, pcov = curve_fit(function, xdata, ydata, p0=[max_I, max_I_x, 0.02, 11])
+
+    curve_data = function(xdata, *popt)
+
+    max_I_x_curve = xdata[int(numpy.mean(numpy.argmax(curve_data)))]
+
+    xdata = numpy.array([x + abs(max_I_x_curve) for x in xdata])
+
+    plt.errorbar(xdata, ydata, fmt=".", label="", markersize=1, elinewidth=0.2)
+    plt.plot(xdata, curve_data)
+    plt.xlabel(x_ax)
+    plt.ylabel(y_ax)
+    plt.legend(legend)
+    plt.title(title)
+    plt.show()
 
 def crop_data(x_data, y_data, x_start, x_end):
     crop_x = []
@@ -118,8 +142,8 @@ def double_slit_intensity(theta, d, a, wavelength, I0, c, b):
 def diffraction(x, I, p, c, b):
     return I * ((np.sin((b * x) - p)/((b * x) - p)) ** 2) + c
 
-def eq(x, I, p, c, b, I_2, d, q ):
-    return I * ((np.sin((b * x) - p)/((b * x) - p)) ** 2) * (I_2 * np.cos((d * x) - q)) ** 2 + c
+def eq(x, I, p, c, b):
+    return I * ((np.sin((b * x) - p)/((b * x) - p)) ** 2) + c
 
 def cos_2(x, I, w, p, c):
     return I * (numpy.cos((w * x + p)) ** 2) + c
