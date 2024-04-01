@@ -8,6 +8,7 @@ from functions import *
 if __name__ == '__main__':
     # single slit
 
+    y_uncert = 0.021749999999999936
     D = 0.526
     xdata, ydata = data_to_xy("../More Data/Single_Slit_0.02.txt")
     xdata.reverse()
