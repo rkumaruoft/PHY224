@@ -18,10 +18,12 @@ if __name__ == '__main__':
     xdata = numpy.array(xdata)
     ydata = numpy.array(ydata)
     max_I_x = xdata[int(numpy.mean(numpy.argmax(ydata)))]
+    x_full = xdata.copy()
+    y_full = ydata.copy()
     x_data_crop = []
     y_data_crop = []
     for index in range(len(xdata)):
-        # if 0.0557 <= xdata[index] <= 0.0733:
+        if 0.0557 <= xdata[index] <= 0.0733:
             x_data_crop.append(xdata[index])
             y_data_crop.append(ydata[index])
     min_x = abs(min(x_data_crop))
@@ -42,4 +44,24 @@ if __name__ == '__main__':
     plt.ylabel("Intensity")
     plt.axhline(y=0)
     plt.legend()
+
+
+    # fitting the outline
+    # curve for diffraction pattern
+    popt, pcov = curve_fit(diffraction, xdata, ydata, p0=[max_I, max_I_x, 0.02, 11],
+                           maxfev=100000)
+
+    popt[0] = 0.065  # fixing the amplitude
+
+    curve_data = diffraction(xdata, *popt)
+    plt.plot(xdata, curve_data)
+
+
+    wavelength = 515 * (10 ** -9)
+    error_slitwidth = numpy.sqrt(pcov[3][3] * wavelength / numpy.pi)
+    slit_width = popt[3] * wavelength/numpy.pi
+    print(slit_width, error_slitwidth)
+
+
+
     plt.show()

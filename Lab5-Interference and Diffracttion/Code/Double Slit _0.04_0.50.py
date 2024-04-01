@@ -40,4 +40,19 @@ if __name__ == '__main__':
     plt.ylabel("Intensity")
     plt.axhline(y=0)
     plt.legend()
+
+    # curve for diffraction pattern
+    popt, pcov = curve_fit(diffraction, xdata, ydata, p0=[max_I, max_I_x, 0.04, 10],
+                           maxfev=100000)
+
+    popt[0] = 0.085  # fixing the amplitude
+
+    curve_data = diffraction(xdata, *popt)
+    plt.plot(xdata, curve_data)
+
+
+    wavelength = 515 * (10 ** -9)
+    error_slitwidth = numpy.sqrt(pcov[3][3]) * wavelength / numpy.pi
+    slit_width = popt[3] * wavelength/numpy.pi
+    print(slit_width, error_slitwidth)
     plt.show()
