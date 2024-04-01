@@ -6,8 +6,7 @@ from scipy.optimize import curve_fit
 from functions import *
 
 if __name__ == '__main__':
-    xdata, ydata = data_to_xy("C:\Year2\Phy224\PythonCode\Lab5-Interference and Diffracttion"
-                              "\More Data\Double_slit_0.04_0.25.txt")
+    xdata, ydata = data_to_xy("../More Data/Double_slit_0.04_0.25.txt")
 
     D = 0.706
     wavelength = 515 * (10 ** -9)
@@ -30,10 +29,11 @@ if __name__ == '__main__':
     ydata = numpy.array(y_data_crop)
     plt.errorbar(xdata, ydata, fmt=".", label="", markersize=1, elinewidth=0.2)
 
-    # popt, pcov = curve_fit(cos_2, xdata, ydata, p0=[max_I, (numpy.pi * 0.00025 / (wavelength * D)), 0, -0.01])
-    # cos_2_data = cos_2(xdata, popt[0] * 2, popt[1], popt[2], popt[3])
-    # plt.plot(xdata, cos_2_data)
-    # print(popt[1]*wavelength*D/numpy.pi)
+
+    popt, pcov = curve_fit(cos_2, xdata, ydata, p0=[max_I, (numpy.pi * 0.00025 / (wavelength * D)), 0, -0.01])
+    cos_2_data = cos_2(xdata, popt[0] * 2, popt[1], popt[2], popt[3])
+    plt.plot(xdata, cos_2_data)
+    print(popt[1]*wavelength*D/numpy.pi)
     plt.xlabel("Location")
     plt.ylabel("Intensity")
     plt.axhline(y=0)

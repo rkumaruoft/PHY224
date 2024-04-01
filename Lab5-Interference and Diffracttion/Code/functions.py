@@ -52,7 +52,7 @@ def draw_data_and_curve(data, x_ax, y_ax, title, legend, function, amplitude):
 
     popt, pcov = curve_fit(function, xdata, ydata, p0=[max_I, max_I_x, 0.02, 11])
 
-    popt[0] = amplitude # fixing the amplitude
+    popt[0] = amplitude  # fixing the amplitude
 
     curve_data = function(xdata, *popt)
 
@@ -67,6 +67,7 @@ def draw_data_and_curve(data, x_ax, y_ax, title, legend, function, amplitude):
     plt.legend(legend)
     plt.title(title)
     plt.show()
+
 
 def draw_data_and_curve2(data, x_ax, y_ax, title, legend, function):
     xdata, ydata = data_to_xy(data)
@@ -93,6 +94,7 @@ def draw_data_and_curve2(data, x_ax, y_ax, title, legend, function):
     plt.title(title)
     plt.show()
 
+
 def crop_data(x_data, y_data, x_start, x_end):
     crop_x = []
     crop_y = []
@@ -110,7 +112,8 @@ def fit_double_slit_outline(data, x_start, x_end, prominence, width, function):
     xdata = np.array(xdata)
     ydata = np.array(ydata)
 
-    peak_index, _ = find_peaks(ydata, height=0, prominence=prominence, width=width) # x_peaks is ""ïndex"" of the 1d array that contains a peak
+    peak_index, _ = find_peaks(ydata, height=0, prominence=prominence,
+                               width=width)  # x_peaks is ""ïndex"" of the 1d array that contains a peak
     peak_index = np.array(peak_index)
 
     x_peaks = []
@@ -139,11 +142,14 @@ def double_slit_intensity(theta, d, a, wavelength, I0, c, b):
     intensity = I0 / (theta ** 2) * ((np.sin(alpha) / alpha) ** 2) * (np.cos(beta) ** 2) + c
     return intensity
 
+
 def diffraction(x, I, p, c, b):
-    return I * ((np.sin((b * x) - p)/((b * x) - p)) ** 2) + c
+    return I * ((np.sin((b * x) - p) / ((b * x) - p)) ** 2) + c
+
 
 def eq(x, I, p, c, b):
-    return I * ((np.sin((b * x) - p)/((b * x) - p)) ** 2) + c
+    return I * ((np.sin((b * x) - p) / ((b * x) - p)) ** 2) + c
+
 
 def cos_2(x, I, w, p, c):
     return I * (numpy.cos((w * x + p)) ** 2) + c
