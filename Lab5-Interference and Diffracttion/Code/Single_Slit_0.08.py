@@ -7,7 +7,7 @@ from functions import *
 
 if __name__ == '__main__':
     # single slit
-
+    y_uncert = 0.021749999999999936
     D = 70.6 * 10**-2
     xdata, ydata = data_to_xy("../More Data/Single_Slit_0.08.txt")
     xdata.reverse()
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     print(popt)
     max_I_x_curve = xdata[int(numpy.mean(numpy.argmax(curve_data)))]
     xdata = numpy.array([x + abs(max_I_x_curve) for x in xdata])
-    plt.errorbar(xdata, ydata, fmt=".", label="", markersize=1, elinewidth=0.2)
+    plt.errorbar(xdata, ydata, fmt=".", label="", markersize=1, elinewidth=0.2,yerr=y_uncert )
     plt.plot(xdata, curve_data)
     plt.xlabel("Location (theta)")
     plt.ylabel("Intensity)")
@@ -54,3 +54,23 @@ if __name__ == '__main__':
     # print(slit_width)
     #
     # print(wavelength / (popt[3]))
+
+    """residual graph"""
+
+    residuals = []
+    for line in range(len(xdata)):
+        residuals.append(ydata[line] - curve_data[line])
+    plt.errorbar(xdata, residuals, yerr=y_uncert , fmt=".", markersize=1, elinewidth=0.1, alpha=0.2)
+    plt.xlabel("Phase angle")
+    plt.ylabel("residual")
+    plt.axhline(y=0)
+
+    plt.show()
+
+    """chi_r"""
+    summ = 0
+    N = len(xdata)
+    for i in range(N):
+        summ += ((ydata[i] - curve_data[i]) ** 2) / (y_uncert ** 2)
+    chi_r = summ / (N - 4)
+    print("chi_r^2 value: ", chi_r)
