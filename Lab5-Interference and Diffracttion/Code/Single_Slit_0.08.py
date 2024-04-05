@@ -1,3 +1,5 @@
+import math
+
 import matplotlib as mat
 import numpy
 import matplotlib.pyplot as plt
@@ -24,15 +26,16 @@ if __name__ == '__main__':
     print(popt)
     max_I_x_curve = xdata[int(numpy.mean(numpy.argmax(curve_data)))]
     xdata = numpy.array([x + abs(max_I_x_curve) for x in xdata])
-    plt.errorbar(xdata, ydata, fmt=".", label="Sensor Data", markersize=1, elinewidth=0.2, alpha=0.2, yerr=y_uncert)
+    plt.errorbar(xdata, ydata, fmt=".", label="Sensor Data", markersize=1, elinewidth=0.75, alpha=0.5, yerr=y_uncert)
     plt.plot(xdata, curve_data, label="Diffraction Curve")
     plt.xlabel("Location (meters)")
     plt.ylabel("Intensity (Volts)")
     plt.axhline(y=0)
     plt.legend()
     wavelength = 515 * (10 ** -9)
+    error_slitwidth = numpy.sqrt(pcov[3][3]) * wavelength / numpy.pi * D
     slit_width = popt[3] * wavelength / numpy.pi * D
-    print(slit_width)
+    print(slit_width, error_slitwidth)
     plt.savefig("Pics/Single_Slit_0.08.png", dpi=500)
     plt.show()
 
@@ -41,7 +44,8 @@ if __name__ == '__main__':
     residuals = []
     for line in range(len(xdata)):
         residuals.append(ydata[line] - curve_data[line])
-    plt.errorbar(xdata, residuals, yerr=y_uncert, fmt=".", markersize=1, elinewidth=0.1, alpha=0.2, label="Residual Data")
+    plt.errorbar(xdata, residuals, yerr=y_uncert, fmt=".", markersize=1, elinewidth=0.1, alpha=0.2,
+                 label="Residual Data")
     plt.xlabel("Location (meters)")
     plt.ylabel("Intensity (Volts)")
     plt.axhline(y=0)
@@ -56,3 +60,7 @@ if __name__ == '__main__':
         summ += ((ydata[i] - curve_data[i]) ** 2) / (y_uncert ** 2)
     chi_r = summ / (N - 4)
     print("chi_r^2 value: ", chi_r)
+
+    # Method 2
+    first_min = abs(0.12999 - 0.134357)
+    print(wavelength / math.sin(first_min) * D)

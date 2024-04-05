@@ -10,5 +10,8 @@ if __name__ == '__main__':
     max_Y = max(ydata)
     min_y = min(ydata)
 
+    mean_Val = numpy.mean(ydata)
+
     uncertainty = max_Y - min_y
     print(uncertainty)
+    print((uncertainty/mean_Val) * 100)

@@ -9,8 +9,8 @@ from functions import *
 
 if __name__ == '__main__':
     # single slit
-
-    D = 70.6 * 10 ** -2
+    y_uncert = 0.021749999999999936
+    D = 0.706
     xdata, ydata = data_to_xy("../More Data/Single_Slit_0.02.txt")
     xdata.reverse()
     ydata.reverse()
@@ -36,9 +36,9 @@ if __name__ == '__main__':
     plt.show()
 
     wavelength = 515 * (10 ** -9)
-    error_slitwidth = numpy.sqrt(pcov[3][3]) * wavelength/numpy.pi * D
+    error_slitwidth = numpy.sqrt(pcov[3][3]) * wavelength / numpy.pi * D
 
-    slit_width = popt[3] * wavelength/numpy.pi * D
+    slit_width = popt[3] * wavelength / numpy.pi * D
     print(slit_width, error_slitwidth)
 
     """residual graph"""
@@ -46,7 +46,8 @@ if __name__ == '__main__':
     residuals = []
     for line in range(len(xdata)):
         residuals.append(ydata[line] - curve_data[line])
-    plt.errorbar(xdata, residuals, yerr=y_uncert, fmt=".", markersize=1, elinewidth=0.1, alpha=0.1, label="Residual Data")
+    plt.errorbar(xdata, residuals, yerr=y_uncert, fmt=".", markersize=1, elinewidth=0.1, alpha=0.1,
+                 label="Residual Data")
     plt.xlabel("Location (meters)")
     plt.ylabel("Intensity (Volts)")
     plt.axhline(y=0)
@@ -62,9 +63,6 @@ if __name__ == '__main__':
     chi_r = summ / (N - 4)
     print("chi_r^2 value: ", chi_r)
 
-
-    #Method 2
+    # Method 2
     first_min = 0.015558 - 0.0018354
-    print(wavelength/math.sin(first_min) * D)
-
-
+    print(wavelength / math.sin(first_min) * D)

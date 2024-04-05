@@ -61,7 +61,7 @@ def draw_data_and_curve(data, x_ax, y_ax, title, legend, function, amplitude):
 
     xdata = numpy.array([x + abs(max_I_x_curve) for x in xdata])
 
-    plt.errorbar(xdata, ydata, fmt=".", label="", markersize=1, elinewidth=0.2)
+    plt.errorbar(xdata, ydata, fmt=".", label="", markersize=1, elinewidth=0.2, alpha=0.5)
     plt.plot(xdata, curve_data)
     plt.xlabel(x_ax)
     plt.ylabel(y_ax)

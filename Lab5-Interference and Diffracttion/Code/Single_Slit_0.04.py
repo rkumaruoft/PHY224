@@ -29,7 +29,7 @@ if __name__ == '__main__':
     plt.ylabel("Intensity (Volts)")
     plt.legend()
     wavelength = 515 * (10 ** -9)
-    error_slitwidth = numpy.sqrt(pcov[3][3] * wavelength / numpy.pi)
+    error_slitwidth = numpy.sqrt(pcov[3][3]) * wavelength / numpy.pi * D
     slit_width = popt[3] * wavelength / numpy.pi * D
     print(slit_width, error_slitwidth)
     plt.savefig("Pics/Single_Slit_0.04.png", dpi=500)
