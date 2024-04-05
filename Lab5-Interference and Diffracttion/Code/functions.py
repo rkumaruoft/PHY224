@@ -7,6 +7,7 @@ from scipy.signal import find_peaks
 
 """Light Interference and diffraction lab"""
 
+y_uncert = 0.021749999999999936
 
 def read_file_data(filename):
     file = open(filename, 'r')

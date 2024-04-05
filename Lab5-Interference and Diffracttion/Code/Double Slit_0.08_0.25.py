@@ -57,8 +57,8 @@ if __name__ == '__main__':
     plt.plot(xdata, curve_data)
 
     wavelength = 515 * (10 ** -9)
-    error_slitwidth = numpy.sqrt(pcov[3][3] * wavelength / numpy.pi)
-    slit_width = popt[3] * wavelength/numpy.pi
+    error_slitwidth = numpy.sqrt(pcov[3][3]) * wavelength / numpy.pi * D
+    slit_width = popt[3] * wavelength/numpy.pi * D
     print(slit_width, error_slitwidth)
 
     # plt.show()

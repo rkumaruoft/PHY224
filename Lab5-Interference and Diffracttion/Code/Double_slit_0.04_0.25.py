@@ -34,37 +34,30 @@ if __name__ == '__main__':
     ydata = numpy.array(y_data_crop)
     plt.errorbar(xdata, ydata, fmt=".", label="", markersize=1, elinewidth=0.2, yerr=y_uncert)
 
-
     popt, pcov = curve_fit(cos_2, xdata, ydata, p0=[max_I, (numpy.pi * 0.00025 / (wavelength * D)), 0, -0.01])
     cos_2_data = cos_2(xdata, max_I, popt[1], popt[2], popt[3])
     plt.plot(xdata, cos_2_data, alpha=0.2)
 
-
-    print(popt[1]*wavelength*D/numpy.pi)
+    print(popt[1] * wavelength * D / numpy.pi)
 
     plt.xlabel("Location")
     plt.ylabel("Intensity")
     plt.axhline(y=0)
     plt.legend()
 
-
     # fitting the outline
     # curve for diffraction pattern
-    popt, pcov = curve_fit(diffraction, xdata, ydata, p0=[max_I, max_I_x, 0.02, 11],
-                           maxfev=100000)
+    popt, pcov = curve_fit(diffraction, xdata, ydata, p0=[max_I, max_I_x, 0.02, 11], maxfev=100000)
 
     popt[0] = 0.065  # fixing the amplitude
 
     curve_data = diffraction(xdata, *popt)
     plt.plot(xdata, curve_data)
 
-
     wavelength = 515 * (10 ** -9)
-    error_slitwidth = numpy.sqrt(pcov[3][3] * wavelength / numpy.pi)
-    slit_width = popt[3] * wavelength/numpy.pi
+    error_slitwidth = numpy.sqrt(pcov[3][3]) * wavelength / numpy.pi * D
+    slit_width = popt[3] * wavelength / numpy.pi * D
     print(slit_width, error_slitwidth)
-
-
 
     # plt.show()
 
@@ -91,7 +84,7 @@ if __name__ == '__main__':
     for l in range(len(x_peaks)):
         residuals.append(y_peaks[l] - curve_data_peaks[l])
 
-    plt.errorbar(x_peaks, residuals, yerr=y_uncert , fmt=".", markersize=1, elinewidth=0.4, alpha=1)
+    plt.errorbar(x_peaks, residuals, yerr=y_uncert, fmt=".", markersize=1, elinewidth=0.4, alpha=1)
     plt.xlabel("Sensor location (m)")
     plt.ylabel("residual")
     plt.axhline(y=0)
