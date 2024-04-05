@@ -1,3 +1,5 @@
+import math
+
 import matplotlib as mat
 import numpy
 import matplotlib.pyplot as plt
@@ -38,7 +40,9 @@ if __name__ == '__main__':
     cos_2_data = cos_2(xdata, max_I, popt[1], popt[2], popt[3])
     plt.plot(xdata, cos_2_data, alpha=0.5, color="brown", label="Interference Curve")
 
-    print(popt[1] * wavelength * D / numpy.pi)
+    slit_separation = popt[1] * wavelength * D / numpy.pi
+    slit_separation_err = math.sqrt(pcov[1][1]) * wavelength * D / numpy.pi
+    print(slit_separation, slit_separation_err)
 
     plt.xlabel("Location (meters)")
     plt.ylabel("Intensity (Volts)")

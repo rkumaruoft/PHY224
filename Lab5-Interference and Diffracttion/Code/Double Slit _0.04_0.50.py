@@ -1,3 +1,5 @@
+import math
+
 import matplotlib as mat
 import numpy
 import matplotlib.pyplot as plt
@@ -30,16 +32,14 @@ if __name__ == '__main__':
     ydata = numpy.array(y_data_crop)
     plt.errorbar(xdata, ydata, fmt=".", label="Sensor Data", markersize=1, elinewidth=0.2, yerr=y_uncert)
 
-    popt, pcov = curve_fit(cos_2, xdata, ydata, p0=[max_I, (numpy.pi * 0.00050 / (wavelength * D)), 0, -0.01], sigma=y_uncert)
+    popt, pcov = curve_fit(cos_2, xdata, ydata, p0=[max_I, (numpy.pi * 0.00050 / (wavelength * D)), 0, -0.01])
     cos_2_data = cos_2(xdata, max_I, popt[1], popt[2], -0.01)
     plt.plot(xdata, cos_2_data, alpha=0.2, label="Interference Curve")
 
-    print(popt[1] * wavelength * D / numpy.pi)
+    print(popt[1] * wavelength * D / numpy.pi, math.sqrt(pcov[1][1]) * wavelength * D / numpy.pi)
 
-    plt.xlabel("Location")
-    plt.ylabel("Intensity")
-    plt.axhline(y=0)
-    plt.legend()
+    plt.xlabel("Location (meters)")
+    plt.ylabel("Intensity (Volts)")
 
     # curve for diffraction pattern
     popt, pcov = curve_fit(diffraction, xdata, ydata, p0=[max_I, max_I_x, 0.04, 10])
@@ -47,10 +47,10 @@ if __name__ == '__main__':
     popt[0] = 0.085  # fixing the amplitude
 
     curve_data = diffraction(xdata, *popt)
-    plt.plot(xdata, curve_data)
+    plt.plot(xdata, curve_data, label="Diffraction Curve")
 
     wavelength = 515 * (10 ** -9)
-    error_slitwidth = numpy.sqrt(pcov[3][3]) * wavelength / numpy.pi *D
+    error_slitwidth = numpy.sqrt(pcov[3][3]) * wavelength / numpy.pi * D
     slit_width = popt[3] * wavelength / numpy.pi * D
     print(slit_width, error_slitwidth)
 
@@ -66,7 +66,8 @@ if __name__ == '__main__':
         x_peaks.append(xdata[i])
         y_peaks.append(ydata[i])
 
-    # plt.plot(x_peaks, y_peaks, "x")
+    plt.legend()
+    plt.savefig("Pics/double_slit_0.04_0.50.png", dpi=250)
 
     plt.show()
     # Calculate the x residual of the peaks
@@ -77,11 +78,13 @@ if __name__ == '__main__':
     for l in range(len(x_peaks)):
         residuals.append(y_peaks[l] - curve_data_peaks[l])
 
-    plt.errorbar(x_peaks, residuals, yerr=y_uncert, fmt=".", markersize=1, elinewidth=0.4, alpha=1, label="Residual data")
-    plt.xlabel("Sensor location (m)")
+    plt.errorbar(x_peaks, residuals, yerr=y_uncert, fmt=".", markersize=1, elinewidth=0.4, alpha=1,
+                 label="Residual data")
+    plt.xlabel("Sensor location (Meters)") 
     plt.ylabel("Intensity (Volts)")
     plt.axhline(y=0)
     plt.legend()
+    plt.savefig("Pics/double_slit_0.04_0.50_residuals.png", dpi=250)
     plt.show()
 
     """chi_r^2 (of peak values, outline only)"""
