@@ -45,9 +45,9 @@ def draw_residual(measured_data, calculated_data, x_axis_data, measured_uncert):
 if __name__ == '__main__':
     #  hastag the label of the csv data file.
 
-    data1 = numpy.loadtxt("radius of earth-dat.csv", delimiter=',')
+    data2 = numpy.loadtxt("radius of earth-dat2.csv", delimiter=',')
 
-    x_data, y_data, x_uncert, y_uncert = make_data_array(data1)
+    x_data, y_data, x_uncert, y_uncert = make_data_array(data2)
 
     popt, pcov = curve_fit(model, x_data, y_data)
 
