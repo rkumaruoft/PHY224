@@ -1,3 +1,5 @@
+import math
+
 import matplotlib as mat
 import numpy
 import matplotlib.pyplot as plt
@@ -31,19 +33,18 @@ if __name__ == '__main__':
     xdata = numpy.array(x_data_crop)
     ydata = numpy.array(y_data_crop)
 
-    plt.errorbar(xdata, ydata, fmt=".", label="", markersize=1, elinewidth=0.2, yerr = y_uncert)
+    plt.errorbar(xdata, ydata, fmt=".", label="Sensor Data", markersize=1, elinewidth=0.2, yerr = y_uncert)
 
     popt, pcov = curve_fit(cos_2, xdata, ydata, p0=[max_I, (numpy.pi * 0.00025 / (wavelength * D)), 0, -0.01],
                            maxfev=10000)
     cos_2_data = cos_2(xdata, max_I, popt[1], popt[2], -0.01)
-    plt.plot(xdata, cos_2_data, alpha=0.2)
+    plt.plot(xdata, cos_2_data, alpha=0.2, label="Interference curve")
 
-    print(popt[1] * wavelength * D / numpy.pi)
+    print(popt[1] * wavelength * D / numpy.pi, math.sqrt(pcov[1][1]) * wavelength * D / numpy.pi)
 
 
     plt.xlabel("Location")
     plt.ylabel("Intensity")
-    plt.axhline(y=0)
     plt.legend()
 
     # fitting the outline
@@ -54,11 +55,11 @@ if __name__ == '__main__':
 
     curve_data = diffraction(xdata, *popt)
 
-    plt.plot(xdata, curve_data)
+    plt.plot(xdata, curve_data, label="Diffraction curve")
 
     wavelength = 515 * (10 ** -9)
-    error_slitwidth = numpy.sqrt(pcov[3][3] * wavelength / numpy.pi)
-    slit_width = popt[3] * wavelength/numpy.pi
+    error_slitwidth = numpy.sqrt(pcov[3][3]) * wavelength / numpy.pi * D
+    slit_width = popt[3] * wavelength/numpy.pi * D
     print(slit_width, error_slitwidth)
 
     # plt.show()
@@ -68,15 +69,14 @@ if __name__ == '__main__':
     peak_index, _ = find_peaks(ydata, height=0, prominence=0.01,
                                width=None)  # x_peaks is ""ïndex"" of the 1d array that contains a peak
     peak_index = np.array(peak_index)
-
     x_peaks = []
     y_peaks = []
     for i in peak_index:
         x_peaks.append(xdata[i])
         y_peaks.append(ydata[i])
 
-    plt.plot(x_peaks, y_peaks, "x")
 
+    plt.savefig("Pics/double_slit_0.08_0.25.png", dpi=250)
     plt.show()
     # Calculate the x residual of the peaks
     x_peaks = np.array(x_peaks)
@@ -86,11 +86,11 @@ if __name__ == '__main__':
     for l in range(len(x_peaks)):
         residuals.append(y_peaks[l] - curve_data_peaks[l])
 
-    plt.errorbar(x_peaks, residuals, yerr=y_uncert , fmt=".", markersize=1, elinewidth=0.4, alpha=1)
+    plt.errorbar(x_peaks, residuals, yerr=y_uncert , fmt=".", markersize=1, elinewidth=0.4, alpha=1, label="Residual Data")
     plt.xlabel("Sensor location (m)")
     plt.ylabel("residual")
     plt.axhline(y=0)
-
+    plt.savefig("Pics/double_slit_0.08_0.25_residual.png", dpi=250)
     plt.show()
 
     """chi_r^2 (of peak values, outline only)"""
