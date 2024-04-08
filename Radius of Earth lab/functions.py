@@ -7,9 +7,6 @@ from scipy.signal import find_peaks
 
 
 """global functions only
-
-
-
 """
 def read_data(data):
     file = open( data, 'r')
