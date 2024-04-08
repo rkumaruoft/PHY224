@@ -49,6 +49,8 @@ if __name__ == '__main__':
 
     x_data, y_data, x_uncert, y_uncert = make_data_array(data2)
 
+    x_data = x_data * 0.1055 # convert to m/s^2
+
     popt, pcov = curve_fit(model, x_data, y_data)
 
     print("change in R/change in G: ", popt[0])
